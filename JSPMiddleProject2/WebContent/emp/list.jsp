@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="dao" class="com.sist.dao.EmpDAO"></jsp:useBean>
 <%
-    List<EmpVO> list=dao.empListData();// Controller
+    List<EmpVO> list=dao.empListData();  // Controller
 %>
 <c:set var="list" value="<%=list %>"/>
 <!DOCTYPE html>
