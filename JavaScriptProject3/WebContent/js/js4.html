@@ -1,0 +1,41 @@
+<!-- 
+	이미지 제어 / selector
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+img{
+  width:200px;
+  height:300px;
+}
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	/*$('img').css("opacity",.3);  // opacity(투명모드): 0.0~1.0 사이의 숫자 가능(내려갈수록 흐려짐)
+	$('img').hover(function(){
+		$(this).css('opacity',1);  // 따옴표 구분없이 사용 가능
+	},function(){
+		$(this).css('opacity',3);
+	})*/
+	//$('img:nth-child(odd)').css('border','3px solid red');
+	//               2n+1 써도 됨 / 짝수는 even
+	$('img:eq(0)').css('border','3px solid red');
+	//     ===== 맨 앞에꺼 갖고올 때. ()안의 숫자로 다음 이미지로 넘어갈 수 있음
+	/*
+		nth-child => eq => 0번부터 시작
+	*/
+});
+</script>
+</head>
+<body>
+  <img src="htt://localhost/JavaScriptProject3/js/m1.jpeg">  <!-- 앞의 서버 주소가 생략되어 있음 -->
+  <img src="m2.jpeg">
+  <img src="m3.jpeg">
+  <img src="m4.jpeg">
+  <img src="m5.jpeg">
+</body>
+</html>

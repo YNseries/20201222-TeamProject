@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('input[type=button]').click(function(){
+		let no=$(this).attr("data");  // 속성값을 읽어올 때(attribute). 
+		//      ====== 행위를 가한게 this(버튼을 누른게)
+		$('#image').html('<img src=m'+no+'.jpeg width=350 height=450>');
+		// 어떤 '' 혹은 ""로 시작했냐에 따라 같은 기호로 끝내야 함
+		// innerHTML => html()
+	})
+});
+</script>
+</head>
+<body>
+<!-- 태그는 못만들어도, 속성은 맘대로 만들 수 있음 -->
+  <input type="button" value="1번그림" data="1">
+  <input type="button" value="2번그림" data="2">
+  <input type="button" value="3번그림" data="3">
+  <input type="button" value="4번그림" data="4">
+  <input type="button" value="5번그림" data="5">
+  <p id="image"></p>
+</body>
+</html>
