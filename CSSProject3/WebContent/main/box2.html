@@ -1,0 +1,48 @@
+<!-- 
+	margin-left
+	margin-right
+	margin-top
+  + margin-bottom
+  ===============
+    margin: top,left,bottom,right 
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+div{
+   width:300px;
+   height:200px;
+   border: 1px solid black;   /*밑에서 따로 지정하지 않았기 때문에 변경된 부분 외엔 이 상태 그대로 감*/
+   margin-left: 100px;
+   margin-top: 100px;
+}
+h1{
+	padding-left:100px;
+	padding-top:100px;
+}
+
+#a{
+	width:400px;
+	height:100px;
+	background: #ff6a00;
+	/*위에 정해진 div 형식이 있으니까, 여기서 바꾼 weight와 height는 제외하고
+	 나머진 그대로 감. 단, 이전 div박스 하단부터~ 100px이 margin-top*/
+}
+#b{
+	width:50%;    /*브라우저 크기에 따라 달라짐 => 반응형*/
+	height:100px;
+	background: #ccffcc;
+}
+</style>
+</head>
+<body>
+   <div>
+      <h1>Hello CSS</h1>
+   </div>
+   <div id="a"></div>
+   <div id="b"></div>
+</body>
+</html>

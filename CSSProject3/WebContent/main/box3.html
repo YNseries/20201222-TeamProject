@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+div{
+	width:500px;
+	height:100px;
+	border:1px dotted black;
+}
+#a{
+	margin-top: 20px;
+}
+#b{
+	margin-top: 40px;
+}
+#c{
+	margin-top: 60px;
+}
+img{
+	width:200px;
+	height:250px;
+	margin-top: 20px;
+	/*margin-left: 20px;*/
+	/*display:block;  => 세로 출력*/
+}
+img:hover{
+	border:2px solid green;  /*마우스를 대면 올라오면서 테두리에 초록색 생기는*/
+	cursor:pointer;  /*링크 커서가 손가락 모양으로 바뀜*/
+}
+ul{
+	list-style-type: none;   /*ul에 목록 넣었을 때 앞에 생기는 점 없앰*/
+	background: #0000ff;
+	margin-left: 100px;
+	width: 500px;
+	height: 70px;
+}
+ul li{
+	color:white;
+	display: inline-block;   /*inline(width,height...적용이 안됨)
+							   각자 크기만큼 띄어놓으려면 => inline-block*/
+	width:80px;
+	padding-top:20px;
+}
+</style>
+</head>
+<body>
+   <div id="a"></div>
+   <div id="b"></div>
+   <div id="c"></div>
+   <img src="m1.jpeg">
+   <img src="m2.jpeg">
+   <img src="m3.jpeg">
+   <img src="m4.jpeg">
+   <img src="m5.jpeg">
+   <ul>
+      <li>홈</li>
+      <li>맛집</li>
+      <li>호텔</li>
+      <li>레시피</li>
+      <li>뮤직</li>
+   </ul>
+</body>
+</html>

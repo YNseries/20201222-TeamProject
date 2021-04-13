@@ -1,0 +1,48 @@
+<!-- 
+	테두리 (border 관련)
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+div{
+	width: 200px;
+	height: 200px;
+	display: inline-block;
+	margin: 20px;   /* 20px 20px 20px 20p*/
+	/*
+		margin: 20px 30px: = 20px 30px 20px 30px
+	*/
+	border-width: 5px;
+}
+.a{
+	border-style:solid;   /*대부분 solid 사용*/
+	border-radius: 100px;  /*박스 각 100px은 원형*/
+}
+.b{
+	border-style:dotted;
+}
+.c{
+	border-style:ridge;  /*액자모양*/
+}
+img{
+	width:250px;
+	height:250px;
+	border-radius: 100px;
+}
+input{
+	border-radius:30px;
+}
+</style>
+</head>
+<body> <!-- a가 여러개, b가 여러개 => class(중복 가능): 동시 제어 가능 -->
+<!-- 중복 없이 한 개씩 제어? => id -->
+   <div class="a"></div>
+   <div class="b"></div>
+   <div class="c"></div>
+   <img src="m1.jpeg">
+   <input type=text size=15>
+</body>
+</html>
