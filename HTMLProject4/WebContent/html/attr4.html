@@ -1,0 +1,41 @@
+<!-- 
+	<input type="text">
+	===================
+	     ========
+	 속성: id    => 중복이 없는 값
+	      class => 중복이 있는 값
+	     ======== 자바스크립트, CSS에서 사용
+	      name  => 자바 연결 => 데이터를 자바에서 읽을 때
+	      required => 반드시 입력값 설정
+	      placeholder
+	      read only => 비활성(읽기 전용)
+	      size => 크기
+	      value => 입력창의 값
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<!-- id와 class는 디자인용이다.
+ style에서 id는 #, class는 . -->
+<!-- <style type="text/css">
+.a{
+  width:200px;
+}
+#aa{
+  width:300px;
+} -->
+</style>
+</head>
+<body>
+
+   <input type=text class="a" readonly="readonly" size=100><br> 
+   <input type=text class="a" value="admin"><br> <!-- value: 수정할 때 -->
+   <input type=text id="aa"><br> <!-- id에 들어가는 단어는 문자로 시작해야 함 -->
+   <input type=text class="a"><br> <!-- class는 한 번에 관리하기 위함 -->
+   <input type=text class="a"><br>
+</body>
+</html>
+
+

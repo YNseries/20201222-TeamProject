@@ -1,0 +1,64 @@
+<!-- 게시판 폼 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+   <center>
+      <h3>글쓰기</h3>
+      <form action="a.html">
+      <!-- http://localhost/HTMLProject4/html/a.html?name=hong&email=hong%40hong.co.kr&subject=HTML+input+tag&content=HTML+input+tag&pwd=1234 -->
+      <!-- 전송은 안됐지만 저장된 정보 볼 수 있음 -->
+      <table border=1 bordercolor=black width=500>
+         <tr height="35">
+            <th width=20% align="right">이름</th>
+            <td width=80%>
+               <input type=text name=name size=15 required="required"> 
+               <!-- 자바에서 값을 받으려면 name이 있어야 함. 습관적으로 적어야 함 -->
+            </td>
+         </tr>
+         <tr height="35">
+            <th width=20% align="right">이메일</th>
+            <td width=80%>
+               <input type=email name=email size=50>
+            </td>
+         </tr>
+         <tr height="35">
+            <th width=20% align="right">제목</th>
+            <td width=80%>
+               <input type=text name=subject size=50>
+            </td>
+         </tr>
+         <tr height="35">
+            <th width=20% align="right">내용</th>
+            <td width=80%>
+               <textarea rows="5" cols="55" name=content></textarea>
+            </td>
+         </tr>
+         <tr>
+            <th width=20% align="right">비밀번호</th>
+            <td width=80%>
+               <input type="password" name=pwd size=10>
+            </td>
+         </tr>
+         <tr height="35">
+            <td colspan="2" align="center">
+               <input type=submit value="글쓰기">
+               <input type=button value="취소">
+            </td>
+         </tr>
+      </table>
+      </form>
+   </center>
+</body>
+</html>
+
+
+
+
+
+
+
+
