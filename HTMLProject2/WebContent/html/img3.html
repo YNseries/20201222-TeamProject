@@ -1,0 +1,55 @@
+<!-- 
+	<table>
+	  => <tr>: 한 줄, <th>: 제목, <td>: 실제 데이터값
+	     ====
+	       bgcolor: 색상 처리
+	       th, td => width, height, align
+	  => 테이블의 주요 속성
+	     border: 테두리 두께 출력
+	     bordercolor: 테두리 색상
+	     width: 테이블 크기
+	     cellpadding
+	     cellpacing
+	     background-image
+	   => rowspan, colspan
+	   <table> (VueJS, React 때 사용)
+	     <thead>
+	       => 타이틀 입력
+	     </thead>
+	     <tbody>
+	       => 실제 데이터
+	     </tbody>
+	     <tfoot>
+	       => 통계 결과값(생략)
+	     </tfoot>
+	   </table>
+	<a>
+	  => 다른 파일 이동
+	  => 한 페이지에서 위치이동
+	<img>
+	  => 이미지 출력
+	  => 이미지 부분을 클릭 => 메뉴로 이동
+	     <map>
+	       <area>
+	     </map>
+	  => 이미지의 제목(정보) 같이 묶어서 출력
+	     <figure>
+	     <figcaption>
+	  
+	  page 132
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+  <!-- 이미지와 제목을 매칭 => 한 개로 묶어서 처리 -->
+  <figure>
+    <img src="m2.jpeg" width=300 height=400 title="카오스 워킹"> 
+    <!-- title: 실행 뒤 이미지를 설명하는 네모 박스가 나옴 -->
+    <figcaption>카오스 워킹 카오스 워킹 카오스 워킹</figcaption> <!-- caption: 제목 -->
+  </figure>
+</body>
+</html>
