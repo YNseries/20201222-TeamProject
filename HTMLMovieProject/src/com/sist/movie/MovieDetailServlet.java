@@ -13,43 +13,62 @@ import java.util.*;
 @WebServlet("/MovieDetailServlet")
 public class MovieDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// doGet => È­¸é Ãâ·Â¸¸ ÇÔ(ÀÚµ¿À¸·Î È£ÃâµÇ´Â ÇÁ·Î±×·¥ÀÌ¶ó doPost()¿Í (ÇÊ¿ä½Ã)°°ÀÌ À¥¿¡¼­ ¾¸) => request¸¦ ÅëÇØ ³Ñ¾î¿È
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// È­¸é¿¡ Ãâ·Â => ºê¶ó¿ìÀú¿¡ htmlÀ» Àü¼ÛÇÏ°Ú´Ù!
-		response.setContentType("text/html;charset=EUC-KR");
+		// í™”ë©´ì— ì¶œë ¥ => ë¸Œë¼ìš°ì €ì— HTMLì„ ì „ì†¡í•œë‹¤ 
+		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out=response.getWriter();
-		// MovieDetailServlet?mno=5; = URLÁÖ¼Ò => Tomcat(À¥¼­¹ö)ÀÌ ¹ŞÀ½ => request.setAttribute("mno",5) => doGet(request) ¼øÀ¸·Î ÁøÇà
-		// »ç¿ëÀÚ·ÎºÎÅÍ ¿µÈ­ ¹øÈ£¸¦ ¹Ş´Â´Ù
-		String mno=request.getParameter("mno");   // ÀÚµ¿È£ÃâÇÒ ¼ö ÀÖ´Â °ªÀ» ³Ö¾î¾ß È£ÃâÇÒ ¼ö ÀÖÀ½
-		// ¿µÈ­ ¹øÈ£¸¦ => DAO·Î ³Ñ±è => »ó¼¼³»¿ë Ãâ·Â(¸®ÅÏ) VO: µ¥ÀÌÅÍº£ÀÌ½º ³»¿ë °®°í¿È
+		// MovieDetailServlet?mno=5
+		// ì‚¬ìš©ìë¡œ ë¶€í„° ì˜í™” ë²ˆí˜¸ë¥¼ ë°›ëŠ”ë‹¤ 
+		String mno=request.getParameter("mno");
+		// ì˜í™”ë²ˆí˜¸ => DAO => ìƒì„¸ë‚´ìš©ì„ ë¦¬í„´(VO) 
 		MovieDAO dao=new MovieDAO();
-		MovieVO vo=dao.movieDetailData(Integer.parseInt(mno));   //¿µÈ­ ÇÑ °³ÀÇ ³»¿ë
-		ArrayList<MovieVO> list=dao.replyTop10();   // ´ñ±Û
-		// ¸ñ·Ï Ãâ·Â => DAO·ÎºÎÅÍ ArrayList ¹ŞÀ½
-		// »ó¼¼º¸±â => DAO¿¡¼­ VO(¿µÈ­ ÇÏ³ª¿¡ ´ëÇÑ ¸ğµç Á¤º¸) °®°í¿È
+		MovieVO vo=dao.movieDetailData(Integer.parseInt(mno));
+		ArrayList<MovieVO> list=dao.replyTop10();
+		// ëª©ë¡ì„ ì¶œë ¥ => DAO(ArrayList)
+		// ìƒì„¸ë³´ê¸° => DAO(VO) VO:ì˜í™”ê´€ë ¨ í•œê°œì— ëŒ€í•œ ëª¨ë“  ì •ë³´ë¥¼ ê°€ì§€ê³  ìˆë‹¤ 
+		// í™”ë©´ì— ì¶œë ¥ => HTML
 		out.println("<html>");
 		out.println("<head>");
-		// script, css, title, meta ÅÂ±× °¡´É => ¼³Á¤o, È­¸éÃâ·Âx
+		// script , css , title , meta => ì„¤ì • (í™”ë©´ ì¶œë ¥ë¶€ë¶„ì€ ì•„ë‹ˆë‹¤)
 		out.println("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">");
 		out.println("<style type=text/css>");
-		// container(960px) , container-fluid(Full È­¸é)
-		out.println(".row { width:1200px;margin:0px auto;}");
-		// <center> => margin:0px auto;
+		 // container(960px) , container-fluid(Full í™”ë©´)
+		out.println(".row { width:1200px;margin:0px auto;}");//<center>íƒœê·¸ëŠ” ì‚¬ìš©ê¸ˆì§€
+		 // <center> => margin:0px auto;
 		//out.println(".col-sm-9{border:1px solid green;height:450px}");
-		//out.println(".col-sm-3{border:1px solid blue;height:450px}");
+		//out.println(".col-sm-4{border:1px solid blue;height:450px}");
 		out.println("h3{text-align:center}");
 		out.println("</style>");
+		out.println("<script src=\"http://code.jquery.com/jquery.js\"></script>");
+		out.println("<script type=text/javascript>");
+		out.println("var i=0;");
+		out.println("$(function(){");
+		out.println("$('.aaa').click(function(){");
+		out.println("$('.update').hide();");
+		out.println("var no=$(this).attr('value');");
+		out.println("if(i==0){");
+		out.println("$(this).text('ì·¨ì†Œ');");
+		out.println("$('#m'+no).show();");
+		out.println("i=1;");
+		out.println("}");
+		out.println("else{");
+		out.println("$(this).text('ìˆ˜ì •');");
+		out.println("$('#m'+no).hide();");
+		out.println("i=0;");
+		out.println("}");
+		out.println("});");
+		out.println("})");
+		out.println("</script>");
 		out.println("</head>");
 		out.println("<body>");
-		// È­¸é Ãâ·Â ºÎºĞ ==> <html><head><body> »ı·«ÇÒ ¼ö ÀÖ´Ù(Æ²¸°°Ô ¾Æ´Ô)
-		out.println("<div style=\"height:30px\"></div>");   // ¹ØÀ¸·Î Á» ³»¸²
-		out.println("<div class=container>");   // width=960px
-		
-		out.println("<div class=row>");   // »ó¼¼º¸±â, ÀÎ±â¼øÀ§
-		// »ó¼¼º¸±â
-		out.println("<div class=col-sm-9>");   // row´Â ´Ù ´õÇßÀ» ¶§ 12 µÇ¾î¾ß ÇÑ ÁÙ
-		out.println("<h3>&lt;"+vo.getTitle()+"&gt; »ó¼¼º¸±â</h3>");
-		out.println("<table class=\"table table-stripted\">");
+		// í™”ë©´ ì¶œë ¥ ë¶€ë¶„  ==> <html><head><body> => ìƒëµí•  ìˆ˜ ìˆë‹¤
+		out.println("<div style=\"height:30px\"></div>");
+		out.println("<div class=container>");//width=960px
+		out.println("<div class=row>"); // ìƒì„¸ë³´ê¸° , ì¸ê¸°ìˆœìœ„
+		out.println("<div class=col-sm-9>"); // row => ìˆ«ì => 12
+		out.println("<h3>&lt;"+vo.getTitle()+"&gt; ìƒì„¸ë³´ê¸°</h3>");
+		out.println("<table class=\"table table-striped\">");
 		
 		out.println("<tr>");
 		out.println("<td width=30% class=text-center rowspan=6>");
@@ -60,43 +79,41 @@ public class MovieDetailServlet extends HttpServlet {
 		out.println("</tr>");
 		
 		out.println("<tr>");
-		out.println("<td width=10% class=text-right style=\"color:gray\">°¨µ¶</td>");
+		out.println("<td width=10% class=text-right style=\"color:gray\">ê°ë…</td>");
 		out.println("<td width=60%>"+vo.getDirector()+"</td>");
 		out.println("</tr>");
 		
 		out.println("<tr>");
-		out.println("<td width=10% class=text-right style=\"color:gray\">Ãâ¿¬</td>");
+		out.println("<td width=10% class=text-right style=\"color:gray\">ì¶œì—°</td>");
 		out.println("<td width=60%>"+vo.getActor()+"</td>");
 		out.println("</tr>");
 		
 		out.println("<tr>");
-		out.println("<td width=10% class=text-right style=\"color:gray\">Àå¸£</td>");
+		out.println("<td width=10% class=text-right style=\"color:gray\">ì¥ë¥´</td>");
 		out.println("<td width=60%>"+vo.getGenre()+"</td>");
 		out.println("</tr>");
 		
 		out.println("<tr>");
-		out.println("<td width=10% class=text-right style=\"color:gray\">µî±Ş</td>");
+		out.println("<td width=10% class=text-right style=\"color:gray\">ë“±ê¸‰</td>");
 		out.println("<td width=60%>"+vo.getGrade()+"</td>");
 		out.println("</tr>");
 		
 		out.println("<tr>");
-		out.println("<td width=10% class=text-right style=\"color:gray\">°³ºÀÀÏ</td>");
+		out.println("<td width=10% class=text-right style=\"color:gray\">ê°œë´‰ì¼</td>");
 		out.println("<td width=60%>"+vo.getRegdate()+"</td>");
 		out.println("</tr>");
 		
 		out.println("<tr>");
 		out.println("<td colspan=3 class=text-right>");
-		out.println("<a href=# class=\"btn btn-xs btn-danger\">¿¹¸ÅÇÏ±â</a>");
-		out.println("<a href=# class=\"btn btn-xs btn-warning\">ÂòÇÏ±â</a>");
-		out.println("<a href=MovieListServlet class=\"btn btn-xs btn-info\">¸ñ·Ï</a>");
+		out.println("<a href=# class=\"btn btn-xs btn-danger\">ì˜ˆë§¤í•˜ê¸°</a>");
+		out.println("<a href=# class=\"btn btn-xs btn-warning\">ì°œí•˜ê¸°</a>");
+		out.println("<a href=MovieListServlet class=\"btn btn-xs btn-info\">ëª©ë¡</a>");
 		out.println("</td>");
 		out.println("</tr>");
 		out.println("</table>");
 		out.println("</div>");
-		
-		// ÀÎ±â¼øÀ§
 		out.println("<div class=col-sm-3>");
-		out.println("<h3>´ñ±ÛÀÌ ¸¹Àº ¿µÈ­</h3>");   // ´ñ±ÛÀ» ¿Ã¸± ¶§¸¶´Ù ÀÚµ¿À¸·Î È÷Æ®¸¦ Áõ°¡½ÃÅ°´Â Çü½Ä(Trigger)
+		out.println("<h3>ëŒ“ê¸€ì´ ë§ì€ ì˜í™”</h3>");// ëŒ“ê¸€ì„ ì˜¬ë¦¬ë•Œë§ˆë‹¤ ìë™ìœ¼ë¡œ íˆíŠ¸ë¥¼ ì¦ê°€ (Trigger)
 		out.println("<table class=\"table table-hover\">");
 		for(MovieVO tvo:list)
 		{
@@ -115,38 +132,97 @@ public class MovieDetailServlet extends HttpServlet {
 		out.println("</table>");
 		out.println("</div>");
 		out.println("</div>");
-		
-		out.println("<div class=row>"); // ´ñ±Û, ¿µÈ­´º½º
-		// ´ñ±Û
-		HttpSession session=request.getSession();
-		String id=(String)session.getAttribute("id");
+        out.println("<div class=row>"); // ëŒ“ê¸€
+        
+        HttpSession session=request.getSession();
+        String id=(String)session.getAttribute("id");
+        // ë°ì´í„° ì½ê¸°
+        // ê°¯ìˆ˜(ëŒ“ê¸€)
+        int count=dao.replyCount(Integer.parseInt(mno));
+        ArrayList<ReplyVO> rList=dao.replyListData(Integer.parseInt(mno));
 		out.println("<div class=col-sm-9>");
-		// ´ñ±Û Ãâ·Â À§Ä¡
-		// ´ñ±ÛÀÌ ¾ø´Â °æ¿ì ¾ø´Ù°í ³ª¿Àµµ·Ï => ´ñ±Û °¹¼ö ÇÊ¿ä
-		if(id!=null) // ·Î±×ÀÎÀÌ ¼º°øÇßÀ»¶§¸¸ ´ñ±Û ¾µ ¼ö ÀÖ°Ô
+		// ëŒ“ê¸€ ì¶œë ¥ ìœ„ì¹˜ 
+		if(count==0) // ëŒ“ê¸€ì´ ì—†ëŠ” ìƒíƒœ
+		{
+			out.println("<table class=table>");
+			out.println("<tr>");
+			out.println("<td class=text-center style=\"color:red\">");
+			out.println("<h3>ëŒ“ê¸€ì´ ì—†ìŠµë‹ˆë‹¤</h3>");
+			out.println("</td>");
+			out.println("</tr>");
+			out.println("</table>");
+			
+		}
+		else // ëŒ“ê¸€ì´ ì¡´ì¬í•˜ëŠ” ìƒíƒœ
 		{
 			out.println("<table class=table>");
 			out.println("<tr>");
 			out.println("<td>");
-			out.println("<form method=post action=ReplyInsertServlet>");   // form => doPost
+			for(ReplyVO rvo:rList)
+			{
+				out.println("<table class=table>");
+				
+				out.println("<tr>");
+				out.println("<td class=text-left>");
+				out.println("<span style=\"color:blue;font-weight:bold\">"+rvo.getName()+"</span>");
+				out.println("("+rvo.getDbday()+")");
+				out.println("</td>");
+				out.println("<td class=text-right>");
+				if(rvo.getId().equals(id))
+				{
+					out.println("<span value="+rvo.getNo()+" class=\"btn btn-xs btn-success aaa\">ìˆ˜ì •</span>");
+					out.println("<a href=ReplyDeleteServlet?no="+rvo.getNo()+"&mno="+mno+" class=\"btn btn-xs btn-info\">ì‚­ì œ</a>");
+				}
+				out.println("</td>");
+				out.println("</tr>");
+				
+				out.println("<tr>");
+				out.println("<td colspan=2 valign=top class=text-left>");
+				out.println("<pre style=\"white-space:pre-wrap;background:white\">");
+				out.println(rvo.getMsg()+"</pre>");
+				out.println("</td>");
+				out.println("</tr>");
+				// display:none => trë¥¼ ê°ì¶˜ë‹¤ 
+				out.println("<tr class=update id=m"+rvo.getNo()+" style=\"display:none\">");
+				out.println("<td colspan=2>");
+				out.println("<form method=post action=ReplyUpdateServlet>");
+				out.println("<input type=hidden name=mno value="+vo.getMno()+">");// ì´ë™
+				out.println("<input type=hidden name=no value="+rvo.getNo()+">");// ìˆ˜ì •í•  ë²ˆí˜¸
+				out.println("<textarea rows=3 cols=90 style=\"float:left\" name=msg>"+rvo.getMsg()+"</textarea>");
+				out.println("<input type=submit value=ëŒ“ê¸€ìˆ˜ì • class=\"btn btn-sm btn-primary\" style=\"height:68px;float:left\">");
+				out.println("</form>");
+				out.println("</td>");
+				out.println("</tr>");
+				out.println("</table>");
+			}
+			out.println("</td>");
+			out.println("</tr>");
+			out.println("</table>");
+		}
+		if(id!=null) // ë¡œê·¸ì¸ì´ ì„±ê³µí–ˆì„ë•Œë§Œ 
+		{
+			out.println("<table class=table>");
+			out.println("<tr>");
+			out.println("<td>");
+			out.println("<form method=post action=ReplyInsertServlet>");
 			out.println("<input type=hidden name=mno value="+vo.getMno()+">");
 			out.println("<textarea rows=3 cols=90 style=\"float:left\" name=msg></textarea>");
-			out.println("<input type=submit value=´ñ±Û¾²±â class=\"btn btn-sm btn-primary\" style=\"height:68px;float:left\">");
+			out.println("<input type=submit value=ëŒ“ê¸€ì“°ê¸° class=\"btn btn-sm btn-primary\" style=\"height:68px;float:left\">");
 			out.println("</form>");
 			out.println("</td>");
 			out.println("</tr>");
 			out.println("</table>");
 		}
 		out.println("</div>");
-		// ¿µÈ­ ´º½º
-		out.println("<div class=col-sm-3>");
 		
+		out.println("<div class=col-sm-3>");// ì˜í™”ë‰´ìŠ¤ 
 		out.println("</div>");
 		
 		out.println("</div>");
-		out.println("</div>");   // container
+		out.println("</div>");
 		out.println("</body>");
 		out.println("</html>");
+		
 	}
 
 }

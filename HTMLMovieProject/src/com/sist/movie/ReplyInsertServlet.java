@@ -10,44 +10,41 @@ import javax.servlet.http.HttpSession;
 
 import com.sist.dao.*;
 /*
- * 	 <a href=ReplyInsertServlet?no=1> => doGet()
+ *   <a href=ReplyInsertServlet?no=1> => doGet()
  *   <form method=post action=ReplyInsertServlet> => doPost()
  *   
- *   => µ¥ÀÌÅÍ Àü¼Û ¹æ½Ä(ºê¶ó¿ìÀú¿¡¼­) HTML
- *     GET : URLµÚ¿¡ µ¥ÀÌÅÍ Àü¼Û ==> ?º¯¼ö=°ª => ?mno=1
- *           º¸¾È¿¡ Ãë¾àÇÔ
- *           => ¿µÈ­¹øÈ£, ´Ü¼ø °Ë»ö, ÆäÀÌÁö ===================> ¼­ºí¸´¿¡¼­ ÀÚµ¿ È£Ãâ doGet()
- *     POST: UTLµÚ¿¡ µ¥ÀÌÅÍ => ³»ºÎ ³×Æ®¿öÅ©¸¦ ÀÌ¿ëÇØ¼­ Àü¼Û(º¸¾È, µ¥ÀÌÅÍ°¡ ¸¹Àº °æ¿ì »ç¿ë)
- *           => ·Î±×ÀÎ, È¸¿ø°¡ÀÔ, ±Û¾²±â, ÆÄÀÏ¾÷·Îµå =============> doPost()
+ *   => ë°ì´í„° ì „ì†¡ ë°©ì‹ (ë¸Œë¼ìš°ì €)
+ *      GET : URLë’¤ì— ë°ì´í„° ì „ì†¡  ==> ?ë³€ìˆ˜=ê°’  => ?mno=1
+ *            ë³´ì•ˆì´ ì·¨ì•½
+ *            => ì˜í™”ë²ˆí˜¸, ë‹¨ìˆœí•œ ê²€ìƒ‰ , í˜ì´ì§€ ===================> ì„œë¸”ë¦¿ì—ì„œ ìë™í˜¸ì¶œ (doGet())
+ *      POST :URLë’¤ì— ë°ì´í„° => ë‚´ë¶€ ë„¤íŠ¸ì›Œí¬ë¥¼ ì´ìš©í•´ì„œ ì „ì†¡(ë³´ì•ˆ,ë°ì´í„°ê°€ ë§ì€ ê²½ìš°) 
+ *            => ë¡œê·¸ì¸ , íšŒì›ê°€ì… , ê¸€ì“°ê¸° , íŒŒì¼ì—…ë¡œë“œ ======> doPost()
  */
-
 @WebServlet("/ReplyInsertServlet")
 public class ReplyInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 1. »ç¿ëÀÚ°¡ º¸³½ °ªÀ» ¹Ş´Â´Ù
+		// 1. ì‚¬ìš©ìê°€ ë³´ë‚¸ê°’ì„ ë°›ëŠ”ë‹¤ 
 		try
 		{
 			request.setCharacterEncoding("UTF-8");
-		}catch(Exception ex) {
-			ex.printStackTrace();
-		}
+		}catch(Exception ex) {}
 		String mno=request.getParameter("mno");
 		String msg=request.getParameter("msg");
 		HttpSession session=request.getSession();
 		String id=(String)session.getAttribute("id");
 		String name=(String)session.getAttribute("name");
-		// ¸Å°³º¯¼ö°¡ 3°³ ÀÌ»óÀÌ¸é => VO ÀÌ¿ë
+		// ë§¤ê°œë³€ìˆ˜ê°€ 3ê°œì´ìƒì´ë©´ => VOë¥¼ ì´ìš©í•œë‹¤ 
 		ReplyVO vo=new ReplyVO();
 		vo.setMno(Integer.parseInt(mno));
 		vo.setMsg(msg);
 		vo.setId(id);
 		vo.setName(name);
-		// => DAO·Î Àü¼Û => µ¥ÀÌÅÍ¸¦ ¿À¶óÅ¬¿¡ ÀúÀå
+		// => DAOë¡œ ì „ì†¡ => ë°ì´í„°ë¥¼ ì˜¤ë¼í´ì— ì €ì¥
 		MovieDAO dao=new MovieDAO();
 		dao.replyInsert(vo);
-		// => ÀÌµ¿ => »ó¼¼º¸±â·Î ÀÌµ¿
+		// => ì´ë™ => ìƒì„¸ë³´ê¸°ë¡œ ì´ë™ 
 		response.sendRedirect("MovieDetailServlet?mno="+mno);
 	}
 

@@ -8,109 +8,108 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sist.dao.*;  // ¿À¶óÅ¬ ¿¬°á
+import com.sist.dao.*;//ì˜¤ë¼í´ ì—°ê²° 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	// ·Î±×ÀÎ È­¸é => JSP(ÆÄÀÏ µÎ °³¸¦ ¸¸µé¾î¼­ Ã³¸®)/ servletÃ³·³ doGet,doPost·Î ³ª´²Áø°Ô ¾Æ´Ñ service ÇÏ³ª¸¸ ÀÖ±â ¶§¹®¿¡
+
+	// ë¡œê·¸ì¸ í™”ë©´ => JSP (íŒŒì¼ì„ ë‘ê°œë¥¼ ë§Œë“¤ì–´ì„œ ì²˜ë¦¬)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 1. HTMLÀ» Àü¼Û(¿äÃ»ÇÑ Å¬¶óÀÌ¾ğÆ®ÀÇ ºê¶ó¿ìÀú·Î)
-		// => HTMLÀ» º¸³½´Ù´Â ¸Ş¼¼Áö¸¦ ºê¶ó¿ìÀú¿¡ ¾Ë·ÁÁØ´Ù(text/html, text/xml, text/plain(JSON))
-		response.setContentType("text/html;charset=EUC-KR");
-		// 1Á¶´Â UTF-8
-		// Å¬¶óÀÌ¾ğÆ® ºê¶ó¿ìÀú¿¡¼­ HTMLÀ» ÀĞ¾î°¥ ¼ö ÀÖ´Â À§Ä¡ È®ÀÎ(¸Ş¸ğ¸®)
-		PrintWriter out=response.getWriter();
-		out.println("<html>");
-		out.println("<head>");
-		// => CSS, JavaScript, Title => AJAX
-		// CSS »ç¿ë => ¿ÜºÎ CSS
-		out.println("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">");
-		out.println("<style type=text/css>");
-		// container(960px) , container-fluid(Full È­¸é)
-		out.println(".row { width:350px;margin:0px auto;}");//<center>ÅÂ±×´Â »ç¿ë±İÁö
-		// <center> => margin:0px auto;
-		out.println("h3{text-align:center}");
-		out.println("</style>");
-		out.println("</head>");
-		out.println("<body>");
-		// => È­¸é Ãâ·ÂÇÏ´Â ÅÂ±×¸¦ ÀÌ¿ëÇÑ´Ù
-		out.println("<div class=container>");
-		out.println("<h3>Login</h3>");
-		out.println("<div class=row>");
-		
-		// Àü¼Û ÁØºñ
-		out.println("<form method=post action=LoginServlet>");
-		// LoginServlet Å¬·¡½ºÀÇ doPost()·Î ÀÔ·ÂµÈ °ªÀ» º¸³½´Ù
-		out.println("<table class=\"table table-condensed\">");
-		out.println("<tr>");
-		out.println("<th width=20% class=\"danger text-right\">ID</th>");
-		out.println("<td width=80%>");
-		out.println("<input type=text name=id size=20>");
-		out.println("</td>");
-		out.println("</tr>");
-		
-		out.println("<tr>");
-		out.println("<th width=20% class=\"danger text-right\">Password</th>");
-		out.println("<td width=80%>");
-		out.println("<input type=password name=pwd size=20>");
-		out.println("</td>");
-		out.println("</tr>");
-		
-		out.println("<tr>");
-		out.println("<td colspan=2 class=text-center>");
-		out.println("<input type=submit value=·Î±×ÀÎ class=\"btn btn-sm btn-primary\">");
-		// ¹öÆ° Å©±â  btn-lg(large), btn-sm(small), btn-xs(Xsmall)
-		out.println("<input type=button value=Ãë¼Ò class=\"btn btn-sm btn-danger\">");
-		out.println("</td>");
-		out.println("</tr>");
-		out.println("</table>");
-		out.println("</form>");
-		
-		out.println("</div>");
-		out.println("</div>");
-		out.println("</body>");
-		out.println("</html>");
+	     // 1. HTMLì„ ì „ì†¡ (ìš”ì²­í•œ í´ë¼ì´ì–¸íŠ¸ì˜ ë¸Œë¼ìš°ì €ë¡œ ì „ì†¡) 
+		 // => HTMLì„ ë³´ë‚¸ë‹¤ëŠ” ë©”ì„¸ì§€ë¥¼ ë¸Œë¼ìš°ì €ì— ì•Œë ¤ì¤€ë‹¤ (text/html,text/xml,text/plain(JSON))
+		 response.setContentType("text/html;charset=UTF-8");
+		 // 1ì¡°ì™¸ì— ë‹¤ë¥¸ì¡°ëŠ” EUC-KR
+		 // í´ë¼ì´ì–¸íŠ¸ ë¸Œë¼ìš°ì €ì—ì„œ HTMLì„ ì½ì–´ ê°ˆ ìˆ˜ ìˆëŠ” ìœ„ì¹˜ í™•ì¸(ë©”ëª¨ë¦¬)
+		 PrintWriter out=response.getWriter();
+		 out.println("<html>");
+		 out.println("<head>");
+		 // => CSS,JavaScript,Title => AJAX
+		 // CSS ì‚¬ìš© => ì™¸ë¶€ CSS
+		 out.println("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">");
+		 out.println("<style type=text/css>");
+		 // container(960px) , container-fluid(Full í™”ë©´)
+		 out.println(".row { width:350px;margin:0px auto;}");//<center>íƒœê·¸ëŠ” ì‚¬ìš©ê¸ˆì§€
+		 // <center> => margin:0px auto;
+		 out.println("h3{text-align:center}");
+		 out.println("</style>");
+		 out.println("</head>");
+		 out.println("<body>");
+		 // => í™”ë©´ ì¶œë ¥í•˜ëŠ” íƒœê·¸ë¥¼ ì´ìš©í•œë‹¤
+		 out.println("<div class=container>");
+		 out.println("<h3>Login</h3>");
+		 out.println("<div class=row>");
+		 
+		 // ì „ì†¡ ì¤€ë¹„
+		 out.println("<form method=post action=LoginServlet>");
+		 // LoginServletí´ë˜ìŠ¤ì˜ doPost()ë¡œ ì…ë ¥ëœ ë°ì´í„°ë¥¼ ë³´ë‚¸ë‹¤
+		 out.println("<table class=\"table table-condensed\">");
+		 out.println("<tr>");
+		 out.println("<th width=20% class=\"danger text-right\">ID</th>");
+		 out.println("<td width=80%>");
+		 out.println("<input type=text name=id size=20>");
+		 out.println("</td>");
+		 out.println("</tr>");
+		 
+		 out.println("<tr>");
+		 out.println("<th width=20% class=\"danger text-right\">Password</th>");
+		 out.println("<td width=80%>");
+		 out.println("<input type=password name=pwd size=20>");
+		 out.println("</td>");
+		 out.println("</tr>");
+		 
+		 out.println("<tr>");
+		 out.println("<td colspan=2 class=text-center>");
+		 out.println("<input type=submit value=ë¡œê·¸ì¸ class=\"btn btn-sm btn-primary\">");
+		 out.println("<input type=button value=ì·¨ì†Œ class=\"btn btn-sm btn-danger\">");
+		 out.println("</td>");
+		 out.println("</tr>");
+		 out.println("</table>");
+		 out.println("</form>");
+		 out.println("</div>");
+		 out.println("</div>");
+		 out.println("</body>");
+		 out.println("</html>");
+		 
 	}
-	// »ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ id, pwd¸¦ ¹Ş¾Æ¼­ Ã³¸® => ·Î±×ÀÎ½Ã ÀÌµ¿(¿µÈ­¸ñ·ÏÀ¸·Î)
+    // ì‚¬ìš©ìê°€ ì…ë ¥í•œ ID,PWDë¥¼ ë°›ì•„ì„œ ì²˜ë¦¬ => ë¡œê·¸ì¸ (ì˜í™”ëª©ë¡ìœ¼ë¡œ ì´ë™)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// HTML Àü¼Û
-		response.setContentType("text/html;charset=EUC-KR");
+		// HTML ì „ì†¡
+		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 		
-		// 1. »ç¿ëÀÚ°¡ º¸³»ÁØ id, password¸¦ ¹Ş´Â´Ù
-		String id=request.getParameter("id");    // <input type=text name=id>
-		String pwd=request.getParameter("pwd");  // <input type=password name=pwd>
-		
-		// 2. DAO ¿¬µ¿ => °á°ú
+		// 1.ì‚¬ìš©ìê°€ ë³´ë‚´ì¤€ id,passwordë¥¼ ë°›ëŠ”ë‹¤ 
+		String id=request.getParameter("id"); // <input type=text name=id>
+		String pwd=request.getParameter("pwd");//<input type=password name=pwd>
+		// 2.DAOì—°ë™ => ê²°ê³¼ 
 		MovieDAO dao=new MovieDAO();
 		String result=dao.isLogin(id, pwd);
-		
-		// 3. ÀÌµ¿ ½Ãµµ
-		if(result.equals("NOID"))   // ID°¡ ¾ø´Â °æ¿ì
+		// 3.ì´ë™ ì‹œë„
+		if(result.equals("NOID")) //IDê°€ ì—†ëŠ” ê²½ìš°
 		{
 			out.println("<script>");
-			out.println("alert(\"¾ÆÀÌµğ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù\");");
-			out.println("history.back();");   // ·Î±×ÀÎ È­¸éÀ¸·Î ÀÌµ¿
+			out.println("alert(\"ì•„ì´ë””ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤\");");
+			out.println("history.back();");// ë¡œê·¸ì¸ í™”ë©´ìœ¼ë¡œ ì´ë™ 
 			out.println("</script>");
 		}
-		else if(result.equals("NOPWD"))   // ID´Â Á¸Àç => ºñ¹Ğ¹øÈ£ Æ²¸° °æ¿ì
+		else if(result.equals("NOPWD")) // IDëŠ” ì¡´ì¬ => ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦° ê²½ìš°
 		{
 			out.println("<script>");
-			out.println("alert(\"ºñ¹Ğ¹øÈ£°¡ Æ²¸³´Ï´Ù\");");
-			out.println("history.back();");   // ·Î±×ÀÎ È­¸éÀ¸·Î ÀÌµ¿
+			out.println("alert(\"ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦½ë‹ˆë‹¤\");");
+			out.println("history.back();");// ë¡œê·¸ì¸ í™”ë©´ìœ¼ë¡œ ì´ë™ 
 			out.println("</script>");
 		}
-		else   // ID, PWD ÀÏÄ¡ => ·Î±×ÀÎ µÇ´Â »óÅÂ 
+		else // ID,ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜ => ë¡œê·¸ì¸ì´ ë˜ëŠ” ìƒíƒœ 
 		{
-			// 1. ¼­¹ö¿¡ id,nameÀ» ÀúÀå => ÇÁ·Î±×·¥ Á¾·á½Ã±îÁö ±â¾ï: ¼¼¼Ç(ÀÏºÎ Á¤º¸¸¦ ±â¾ïÇÏ´Â°Í)
+			// 1. ì„œë²„ì— ID,Nameì„ ì €ì¥ => í”„ë¡œê·¸ë¨ ì¢…ë£Œì‹œê¹Œì§€ ê¸°ì–µ : ì„¸ì…˜
 			HttpSession session=request.getSession();
-			session.setAttribute("id",id);   // Map¹æ½Ä => (key,value)
+			session.setAttribute("id", id); //Mapë°©ì‹ => key,value
 			session.setAttribute("name", result);
 			
-			// ÀÌµ¿
+			// ì´ë™ 
 			response.sendRedirect("MovieListServlet");
 		}
+		
+		
 	}
 
 }

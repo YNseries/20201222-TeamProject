@@ -20,7 +20,7 @@ public class ReplyVO {
 	private String id;
 	private String name;
 	private String msg;
-	private Date regdate;   // ³¯Â¥¸¦ °®°í ¿À¸é, ÀÔ·ÂÇÑ ½Ã°£À» °®°í¿Ã ¼ö ¾ø´Ù => TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS')
-	// TO_CHAR´Â Ç×»ó º¯¼ö¸¦ ÇÏ³ª ´õ Ãß°¡ÇØ Áà¾ß ÇÔ
+	private Date regdate;   // ì‹œê°„ì„ ê°€ì§€ê³  ì˜¬ ìˆ˜ ì—†ë‹¤  => TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS')
+	// TO_CHARï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½
 	private String dbday;
 }

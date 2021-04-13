@@ -1,334 +1,410 @@
 package com.sist.dao;
-import java.util.*;  // (¿µÈ­)¸ñ·Ï Ãâ·Â => ArrayList => ºê¶ó¿ìÀú¿¡ Àü¼Û
-import java.sql.*;  // ¿À¶óÅ¬ ¿¬µ¿
+import java.util.*;//ëª©ë¡ ì¶œë ¥(ì˜í™”) => ArrayList=>ë¸Œë¼ìš°ì €ì— ì „ì†¡ 
+import java.sql.*;//ì˜¤ë¼í´ ì—°ë™ 
 public class MovieDAO {
-	// 1. ¿À¶óÅ¬ ¿¬°á °´Ã¼
-	private Connection conn;
-	// 2. SQL¹®Àå Àü¼Û => °á°ú°ª ¹Ş¾Æ¿À´Â °´Ã¼
-	private PreparedStatement ps;
-	// 3. ¿À¶óÅ¬ ÁÖ¼Ò(URL)
-	private final String URL="jdbc:oracle:thin:@localhost:1521:XE";
-	//                          ¿ø°İÀ¸·Î ÁøÇà ÇÒ ¶© =========== IP
-	// 1-1. µå¶óÀÌ¹ö µî·Ï => sqldeveloper ¿­±â => »ı¼ºÀÚ´Â ÇÑ ¹ø¸¸ »ç¿ëÀÌ °¡´É
-	/*
-	 *    new MovieDAO()
-	 *    new MovieDAO()    => Ã¢ µÎ°³ ¿­°Ô µÇ´Â °Í
-	 *    ====> ÆĞÅÏ (½Ì±ÛÅÏ,ÆÑÅä¸®...)
-	 */
-	public MovieDAO()
-	{
-		try
-		{
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
-	// 1-2. ¿À¶óÅ¬ ¿¬°á  conn hr/happy
-	public void getConnection()
-	{
-		try
-		{
-			conn=DriverManager.getConnection(URL,"hr","happy");
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
-	// 1-3. ¿À¶óÅ¬ ´İ±â  exit
-	public void disConnection()
-	{
-		try
-		{
-			if(ps!=null) ps.close();
-			if(conn!=null) conn.close();
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
-	// 2-1. ±â´É ¼³Á¤
-	//   1) ·Î±×ÀÎ => °æ¿ìÀÇ ¼ö(2°³: boolean, 2°³ ÀÌ»ó: String,int)
-	//              (ID°¡ Æ²¸° °æ¿ì, ºñ¹Ğ¹øÈ£°¡ Æ²¸° °æ¿ì, ·Î±×ÀÎ)
-	public String isLogin(String id,String pwd)
-	{
-		String result="";
-		try
-		{
-			// 1. ¿¬°á 
-			getConnection();
-			// 2. SQL¹®Àå => ID°¡ Á¸ÀçÇÏ´ÂÁö ¿©ºÎ 
-			String sql="SELECT COUNT(*) FROM webMember "
-					+"WHERE id=?";
-			ps=conn.prepareStatement(sql);
-			// ?¿¡ °ªÀ» Ã¤¿î´Ù 
-			ps.setString(1, id);
-			// ½ÇÇàÈÄ¿¡ °á°ú°ªÀ» ¹Ş´Â´Ù 
-			ResultSet rs=ps.executeQuery();
-			rs.next();
-			int count=rs.getInt(1);
-			rs.close();
-			  
-			if(count==0) //ID°¡ Á¸ÀçÇÏÁö ¾Ê´Â °æ¿ì
-			{
-				result="NOID"; // alert()
-			}
-			else // ID°¡ Á¸ÀçÇÏ´Â °æ¿ì 
-			{
-				// ºñ¹Ğ¹øÈ£ °Ë»ö 
-			    sql="SELECT pwd,name FROM webMember "
-			    	+"WHERE id=?";
-				ps=conn.prepareStatement(sql);
-				// ?¿¡ °ªÀ» Ã¤¿î´Ù
-				ps.setString(1, id);
-				// ½ÇÇà °á°ú°ª°¡ °¡Áö°í ¿Â´Ù
-				rs=ps.executeQuery();
-				rs.next();
-				String db_pwd=rs.getString(1);
-				String name=rs.getString(2);
-				rs.close();
-				 
-				// ºñ¹Ğ¹øÈ£°¡ ÀÖ³Ä?
-				if(db_pwd.equals(pwd)) // ºñ¹Ğ¹øÈ£°¡ ¸Â´Â »óÅÂ => ·Î±×ÀÎ 
-				{
-					// ¿µÈ­¸ñ·ÏÀ¸·Î ÀÌµ¿ 
-					result=name; // id,name=> session => ´ñ±Û»ç¿ëÀÌ ¾ÈµÈ´Ù 
-				}
-				else // ºñ¹Ğ¹øÈ£°¡ Æ²¸° »óÅÂ 
-				{
-					result="NOPWD";
-				}
-			}
+   // 1. ì˜¤ë¼í´  ì—°ê²° ê°ì²´ 
+   private Connection conn;
+   // 2. SQLë¬¸ì¥ ì „ì†¡ => ê²°ê³¼ê°’ì„ ë°›ì•„ì˜¤ëŠ” ê°ì²´
+   private PreparedStatement ps;
+   // 3. ì˜¤ë¼í´ ì£¼ì†Œ (URL)
+   private final String URL="jdbc:oracle:thin:@localhost:1521:XE";
+   // ì›ê²©                                      ========== IP
+   // 1-1. ë“œë¼ì´ë²„ ë“±ë¡ => sqldeveloper ì—´ê¸° => ìƒì„±ìëŠ” í•œë²ˆë§Œ ì‚¬ìš©ì´ ê°€ëŠ¥ 
+   /*
+    *    new MovieDAO()
+    *    new MovieDAO()
+    *    ====> íŒ¨í„´ (ì‹±ê¸€í„´,íŒ©í† ë¦¬...)
+    */
+   public MovieDAO()
+   {
+	   try
+	   {
+		   Class.forName("oracle.jdbc.driver.OracleDriver");
+	   }catch(Exception ex){}
+   }
+   // 1-2. ì˜¤ë¼í´ ì—°ê²°  conn hr/happy
+   public void getConnection()
+   {
+	   try
+	   {
+		   conn=DriverManager.getConnection(URL,"hr","happy");
+	   }catch(Exception ex) {}
+   }
+   // 1-3. ì˜¤ë¼í´ ë‹«ê¸°  exit
+   public void disConnection()
+   {
+	   try
+	   {
+		   if(ps!=null) ps.close();
+		   if(conn!=null) conn.close();
+	   }catch(Exception ex) {}
+   }
+   // 2-1. ê¸°ëŠ¥ ì„¤ì • 
+   // 1) ë¡œê·¸ì¸ => ê²½ìš°ì˜ ìˆ˜ (2ê°œ : boolean,2ê°œì´ìƒ : String,int)
+   // ê²½ìš°ì˜ ìˆ˜ (IDê°€ í‹€ë¦°ê²½ìš° , ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦° ê²½ìš° , ë¡œê·¸ì¸)
+   public String isLogin(String id,String pwd)
+   {
+	   String result="";
+	   try
+	   {
+		   // 1. ì—°ê²° 
+		   getConnection();
+		   // 2. SQLë¬¸ì¥ => IDê°€ ì¡´ì¬í•˜ëŠ”ì§€ ì—¬ë¶€ 
+		   String sql="SELECT COUNT(*) FROM webMember "
+				     +"WHERE id=?";
+		   ps=conn.prepareStatement(sql);
+		   // ?ì— ê°’ì„ ì±„ìš´ë‹¤ 
+		   ps.setString(1, id);
+		   // ì‹¤í–‰í›„ì— ê²°ê³¼ê°’ì„ ë°›ëŠ”ë‹¤ 
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   int count=rs.getInt(1);
+		   rs.close();
+		   
+		   if(count==0) //IDê°€ ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê²½ìš°
+		   {
+			   result="NOID"; // alert()
+		   }
+		   else // IDê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš° 
+		   {
+			   // ë¹„ë°€ë²ˆí˜¸ ê²€ìƒ‰ 
+			   sql="SELECT pwd,name FROM webMember "
+				  +"WHERE id=?";
+			   ps=conn.prepareStatement(sql);
+			   // ?ì— ê°’ì„ ì±„ìš´ë‹¤
+			   ps.setString(1, id);
+			   // ì‹¤í–‰ ê²°ê³¼ê°’ê°€ ê°€ì§€ê³  ì˜¨ë‹¤
+			   rs=ps.executeQuery();
+			   rs.next();
+			   String db_pwd=rs.getString(1);
+			   String name=rs.getString(2);
+			   rs.close();
 			   
-		}catch(Exception ex)
-		{
-			// ¿À·ù È®ÀÎ 
-			System.out.println(ex.getMessage());
-		}
-		finally
-		{
-			// ´İ±â
-			disConnection();
-		}
-		return result;
-	}
-	//   2) ¿µÈ­ ¸ñ·Ï Ãâ·Â
-	public ArrayList<MovieVO> movieListData(int page)
-	{
-		ArrayList<MovieVO> list=new ArrayList<MovieVO>();
-		try
-		{
-		    // 1. ¿¬°á
-			getConnection();
-			// 2. SQL¹®Àå 
-			String sql="SELECT mno,title,poster,num "
+			   // ë¹„ë°€ë²ˆí˜¸ê°€ ìˆëƒ?
+			   if(db_pwd.equals(pwd)) // ë¹„ë°€ë²ˆí˜¸ê°€ ë§ëŠ” ìƒíƒœ => ë¡œê·¸ì¸ 
+			   {
+				   // ì˜í™”ëª©ë¡ìœ¼ë¡œ ì´ë™ 
+				   result=name; // id,name=> session => ëŒ“ê¸€ì‚¬ìš©ì´ ì•ˆëœë‹¤ 
+			   }
+			   else // ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦° ìƒíƒœ 
+			   {
+				   result="NOPWD";
+			   }
+		   }
+		   
+	   }catch(Exception ex)
+	   {
+		   // ì˜¤ë¥˜ í™•ì¸ 
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   // ë‹«ê¸°
+		   disConnection();
+	   }
+	   return result;
+   }
+   // 2) ì˜í™” ëª©ë¡ 
+   public ArrayList<MovieVO> movieListData(int page)
+   {
+	   ArrayList<MovieVO> list=new ArrayList<MovieVO>();
+	   try
+	   {
+		   // 1. ì—°ê²°
+		   getConnection();
+		   // 2. SQLë¬¸ì¥ 
+		   String sql="SELECT mno,title,poster,num "
 				     +"FROM (SELECT mno,title,poster,rownum as num "
 				     +"FROM (SELECT mno,title,poster "
 				     +"FROM movie ORDER BY 1)) "
 				     +"WHERE num BETWEEN ? AND ?";
-			int rowSize=20;  // 20°³¾¿ Ãâ·Â
-			int start=(rowSize*page)-(rowSize-1);
-			int end =rowSize*page;
-			   
-			ps=conn.prepareStatement(sql);
-			   
-			// ?¿¡ °ªÀ» Ã¤¿î´Ù
-			ps.setInt(1, start);
-			ps.setInt(2, end);
-			   
-			// ½ÇÇà¿äÃ» => °á°ú°ªÀ» ¹Ş´Â´Ù 
-			ResultSet rs=ps.executeQuery();
-			while(rs.next())
-			{
-				MovieVO vo=new MovieVO();
-				vo.setMno(rs.getInt(1));
-				vo.setTitle(rs.getString(2));
-				vo.setPoster(rs.getString(3));
-				list.add(vo);
-			}
-			rs.close();
-			   
-		}catch(Exception ex)
-		{
-		    System.out.println(ex.getMessage());
-		}
-		finally
-		{
-			disConnection();
-		}
-		return list;
-	}
-	//   2-1) ÃÑ ÆäÀÌÁö(ÀÌ°Ç Ç×»ó °®°í¿Í¾ßÇÔ. Å¬¸¯ÇØ¼­ ³Ñ¾î°¡°Ô)
-	public int movieTotalPage()
-	{
-	    int total=0;
-	    try
-	    {
-		    // 1. ¿¬°á
-		    getConnection();
-		    // 2. SQL¹®Àå 
-		    String sql="SELECT CEIL(COUNT(*)/20.0) FROM movie";
-		    ps=conn.prepareStatement(sql);
-		    ResultSet rs=ps.executeQuery();
-		    rs.next();
-		    total=rs.getInt(1);
-		    rs.close();
-	    }catch(Exception ex)
-	    {
-		    System.out.println(ex.getMessage());
-	    }
-	    finally
-	    {
-		    disConnection();
-	    }
- 	    return total;
-	}
-	//   3) ¿µÈ­ »ó¼¼º¸±â(mno => »ç¿ëÀÚ°¡ Æ÷½ºÅÍ¸¦ Å¬¸¯ÇÒ ¶§ ³Ñ°ÜÁØ ¹øÈ£) => ÇØ´çÇÏ´Â ¿µÈ­ 1°³ÀÇ Á¤º¸
-	/*
-	 *  MNO      NOT NULL NUMBER(4)     
-		TITLE             VARCHAR2(100) 
-		GENRE             VARCHAR2(100) 
-		POSTER            VARCHAR2(200) 
-		ACTOR             VARCHAR2(300) 
-		REGDATE           VARCHAR2(100) 
-		GRADE             VARCHAR2(50)  
-		DIRECTOR          VARCHAR2(100)
-	 */
-	public MovieVO movieDetailData(int mno)
-	{
-		MovieVO vo=new MovieVO();
-		try
-		{
-			getConnection();
-			String sql="SELECT mno,title,poster,actor,genre,actor,"
-					+ "regdate,grade,director "
-					+ "FROM movie "
-					+ "WHERE mno=?";
-			ps=conn.prepareStatement(sql);
-			ps.setInt(1, mno);
-			// °á°ú°ª ¹Ş±â
-			ResultSet rs=ps.executeQuery();
-			rs.next();
-			vo.setMno(rs.getInt(1));
-			vo.setTitle(rs.getString(2));
-			vo.setPoster(rs.getString(3));
-			vo.setGenre(rs.getString(4));
-			vo.setActor(rs.getString(5));
-			vo.setRegdate(rs.getString(6));
-			vo.setGrade(rs.getString(7));
-			vo.setDirector(rs.getString(8));
-			rs.close();
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-		finally
-		{
-			disConnection();
-		}
-		return vo;   // vo¿¡ °ªÀ» Ã¤¿ö¼­ ³Ñ°ÜÁØ´Ù
-	}
-	//   3-1) ´ñ±ÛÀÌ ¸¹Àº ¿µÈ­
-	public ArrayList<MovieVO> replyTop10()
-	{
-		ArrayList<MovieVO> list=new ArrayList<MovieVO>();
-		try
-		{
-			getConnection();
-			// SQL¹®Àå => °øÁö»çÇ×, ÀÌº¥Æ®, ÀÎ±â¼øÀ§ ... ¸î °³¾¿ Àß¶ó¿Ã ¶§: rownum
-			String sql="SELECT title,poster,hit,rownum "
-					+ "FROM (SELECT title,poster,hit "
-					+ "FROM movie ORDER BY hit DESC) "
-					+ "WHERE rownum<=10";
-			ps=conn.prepareStatement(sql);
-			// ? ¾øÀ¸´Ï±î ¹Ù·Î ½ÇÇà ¿äÃ»
-			ResultSet rs=ps.executeQuery();
-			rs.next();
-			while(rs.next())
-			{
-				MovieVO vo=new MovieVO();
-				vo.setTitle(rs.getString(1));
-				vo.setPoster(rs.getString(2));
-				vo.setHit(rs.getInt(3));
-				list.add(vo);
-			}
-			rs.close();
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-		finally
-		{
-			disConnection();
-		}
-		return list;
-	}
-	//   4) ´ñ±Û ¾²±â
-	public void replyInsert(ReplyVO vo)
-	{
-		try
-		{
-			// 1. ¿¬°á
-			getConnection();
-			// 2. sql¹®Àå(´ñ±Û¿¡ µû¸¥ Á¶È¸¼ö Áõ°¡)
-			String sql="UPDATE movie SET "
-					+ "hit=hit+1 "   // ´ñ±Û insert µÉ ¶§¸¶´Ù hit ÇÏ³ª¾¿ Áõ°¡
-					+ "WHERE mno=?";
-			ps=conn.prepareStatement(sql);
-			ps.setInt(1, vo.getMno());
-			ps.executeUpdate();
-			
-			sql="INSERT INTO webReply VALUES("
-					+ "wr_no_seq.nextval,?,?,?,?,SYSDATE)";
-			ps=conn.prepareStatement(sql);
-			// 2-1. ?¿¡ °ªÃ¤¿ì±â
-			ps.setInt(1, vo.getMno());
-			ps.setString(2, vo.getId());
-			ps.setString(3, vo.getName());
-			ps.setString(4, vo.getMsg());
-			// 3. ½ÇÇà¿äÃ»
-			ps.executeUpdate();
-		}catch(Exception ex) {
-			ex.printStackTrace();
-		}
-		finally
-		{
-			disConnection();
-		}
-	}
-	//   5) ´ñ±Û »èÁ¦
-	//   6) ´ñ±Û ¼öÁ¤
-	//   7) ´ñ±Û ÀĞ±â
-	public ArrayList<ReplyVO> replyListData(int mno)
-	{
-		ArrayList<ReplyVO> list=new ArrayList<ReplyVO>();
-		try
-		{
-			getConnection();
-			String sql="SELECT no,id,name,msg,TO_CHAR(regdate,''YYYY-MM-DD HH24:MI:SS') "
-					+ "FROM webReply "
-					+ "WHERE mno=? "
-					+ "ORDER BY no DESC";   // ÃÖ½Å ´ñ±Û ¼øÀ¸·Î ³ª¿À°Ô
-			ps=conn.prepareStatement(sql);
-			ps.setInt(1, mno);
-			
-			ResultSet rs=ps.executeQuery();
-			while(rs.next())
-			{
-				ReplyVO vo=new ReplyVO();
-				vo.setNo(rs.getInt(1));
-				vo.setId(rs.getString(2));
-				vo.setName(rs.getString(3));
-				vo.setMsg(rs.getString(4));
-				vo.setDbday(rs.getString(5));   // ³¯Â¥ °ª °®°í¿Ã ¶§ ¿À¶óÅ¬¿¡¼­ °®°í¿Í¾ß ÇÔ
-				list.add(vo);
-			}
-			rs.close();
-		}catch(Exception ex) {
-			ex.printStackTrace();
-		}
-		finally
-		{
-			disConnection();
-		}
-		return list;
-	}
-	//   8) ´ñ±Û ¸î °³ÀÎÁö È®ÀÎ... Àº ¾ÈÇØµµ µÉµí
-
+		   int rowSize=20;
+		   int start=(rowSize*page)-(rowSize-1);
+		   int end =rowSize*page;
+		   
+		   ps=conn.prepareStatement(sql);
+		   
+		   // ?ì— ê°’ì„ ì±„ìš´ë‹¤
+		   ps.setInt(1, start);
+		   ps.setInt(2, end);
+		   
+		   // ì‹¤í–‰ìš”ì²­ => ê²°ê³¼ê°’ì„ ë°›ëŠ”ë‹¤ 
+		   ResultSet rs=ps.executeQuery();
+		   while(rs.next())
+		   {
+			  MovieVO vo=new MovieVO();
+			  vo.setMno(rs.getInt(1));
+			  vo.setTitle(rs.getString(2));
+			  vo.setPoster(rs.getString(3));
+			  list.add(vo);
+		   }
+		   rs.close();
+		   
+	   }catch(Exception ex)
+	   {
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return list;
+   }
+   // 2-1) ì´í˜ì´ì§€ 
+   public int movieTotalPage()
+   {
+	   int total=0;
+	   try
+	   {
+		   // 1. ì—°ê²°
+		   getConnection();
+		   // 2. SQLë¬¸ì¥ 
+		   String sql="SELECT CEIL(COUNT(*)/20.0) FROM movie";
+		   ps=conn.prepareStatement(sql);
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   total=rs.getInt(1);
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return total;
+   }
+   // 3) ì˜í™” ìƒì„¸ë³´ê¸° (mno=> ì‚¬ìš©ìê°€ í¬ìŠ¤í„°ë¥¼ í´ë¦­í• ë•Œ ë„˜ê²¨ì¤€ ë²ˆí˜¸) => ì˜í™” 1ê°œì— ëŒ€í•œ ì •ë³´
+   /*
+    *   MNO      NOT NULL NUMBER(4)     
+	TITLE             VARCHAR2(100) 
+	GENRE             VARCHAR2(100) 
+	POSTER            VARCHAR2(200) 
+	ACTOR             VARCHAR2(300) 
+	REGDATE           VARCHAR2(100) 
+	GRADE             VARCHAR2(50)  
+	DIRECTOR          VARCHAR2(100)
+    */
+   public MovieVO movieDetailData(int mno)
+   {
+	   MovieVO vo=new MovieVO();
+	   try
+	   {
+		   // 1. ì—°ê²°
+		   getConnection();
+		   // 2. SQLë¬¸ì¥ 
+		   String sql="SELECT mno,title,poster,genre,actor,"
+				     +"regdate,grade,director "
+				     +"FROM movie "
+				     +"WHERE mno=?";
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, mno);
+		   // ê²°ê³¼ê°’ ë°›ê¸°
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   vo.setMno(rs.getInt(1));
+		   vo.setTitle(rs.getString(2));
+		   vo.setPoster(rs.getString(3));
+		   vo.setGenre(rs.getString(4));
+		   vo.setActor(rs.getString(5));
+		   vo.setRegdate(rs.getString(6));
+		   vo.setGrade(rs.getString(7));
+		   vo.setDirector(rs.getString(8));
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   // ì˜¤ë¥˜ì²˜ë¦¬
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   disConnection();// í•´ì œ
+	   }
+	   return vo;//voì— ê°’ì„ ì±„ì›Œì„œ ë„˜ê²¨ì¤€ë‹¤ 
+   }
+   // 3-1) ëŒ“ê¸€ì´ ë§ì€ ì˜í™” 
+   public ArrayList<MovieVO> replyTop10()
+   {
+	   ArrayList<MovieVO> list=new ArrayList<MovieVO>();
+	   try
+	   {
+		   // 1. ì—°ê²°
+		   getConnection();
+		   // 2. SQLë¬¸ì¥ => ê³µì§€ì‚¬í•­ , ì´ë²¤íŠ¸ , ì¸ê¸°ìˆœìœ„ .... rownum
+		   String sql="SELECT title,poster,hit,rownum "
+				     +"FROM (SELECT title,poster,hit "
+				     +"FROM movie ORDER BY hit DESC) "
+				     +"WHERE rownum<=10";
+		   ps=conn.prepareStatement(sql);
+		   // ì‹¤í–‰ ìš”ì²­ 
+		   ResultSet rs=ps.executeQuery();
+		   while(rs.next())
+		   {
+			   MovieVO vo=new MovieVO();
+			   vo.setTitle(rs.getString(1));
+			   vo.setPoster(rs.getString(2));
+			   vo.setHit(rs.getInt(3));
+			   list.add(vo);
+		   }
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return list;
+   }
+   // 4) ëŒ“ê¸€ ì“°ê¸°
+   public void replyInsert(ReplyVO vo)
+   {
+	   try
+	   {
+		   // 1. ì—°ê²°
+		   getConnection();
+		   // 2. SQLë¬¸ì¥
+		   String sql="UPDATE movie SET "
+				     +"hit=hit+1 "
+				     +"WHERE mno=?";
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, vo.getMno());
+		   ps.executeUpdate();
+		   
+		   sql="INSERT INTO webReply VALUES("
+				     +"wr_no_seq.nextval,?,?,?,?,SYSDATE)";
+		   ps=conn.prepareStatement(sql);
+		   // 2-2.?ì— ê°’ì„ ì±„ìš´ë‹¤ 
+		   ps.setInt(1, vo.getMno());
+		   ps.setString(2, vo.getId());
+		   ps.setString(3, vo.getName());
+		   ps.setString(4, vo.getMsg());
+		   // 3. ì‹¤í–‰ 
+		   ps.executeUpdate();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+   }
+   // 5) ëŒ“ê¸€ ì‚­ì œ  reply_no  movie_no
+   public void replyDelete(int no)
+   {
+	   try
+	   {
+		   // 1. ì—°ê²°
+		   getConnection();
+		   // SQL
+		   String sql="DELETE FROM webReply "
+				     +"WHERE no=?";
+		   ps=conn.prepareStatement(sql);
+		   // 3. ?ì—ê°’ì„ ì±„ìš´ë‹¤
+		   ps.setInt(1, no);
+		   // 4. ì‚­ì œ ì‹¤í–‰ ìš”ì²­ 
+		   ps.executeUpdate();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+   }
+   // 6) ëŒ“ê¸€ ìˆ˜ì • 
+   public void replyUpdate(int no,String msg)
+   {
+	   try
+	   {
+		   getConnection();
+		   String sql="UPDATE webReply SET "
+		   		+ "msg=? "
+		   		+ "WHERE no=?";
+		   ps=conn.prepareStatement(sql);
+		   ps.setString(1, msg);
+		   ps.setInt(2, no);
+		   
+		   // ì‹¤í–‰
+		   ps.executeQuery();
+	   }catch(Exception ex) {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+   }
+   // 7) ëŒ“ê¸€ ì½ê¸°
+   public ArrayList<ReplyVO> replyListData(int mno)
+   {
+	   ArrayList<ReplyVO> list=new ArrayList<ReplyVO>();
+	   try
+	   {
+		   getConnection();
+		   String sql="SELECT no,id,name,msg,TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS') "
+				     +"FROM webReply "
+				     +"WHERE mno=? "
+				     +"ORDER BY no DESC";//ìµœì‹  ëŒ“ê¸€
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, mno);
+		   
+		   ResultSet rs=ps.executeQuery();
+		   while(rs.next())
+		   {
+			   ReplyVO vo=new ReplyVO();
+			   vo.setNo(rs.getInt(1));
+			   vo.setId(rs.getString(2));
+			   vo.setName(rs.getString(3));
+			   vo.setMsg(rs.getString(4));
+			   vo.setDbday(rs.getString(5));
+			   list.add(vo);
+		   }
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return list;
+   }
+   // 8) ëŒ“ê¸€ ëª‡ê°œì¸ì§€ í™•ì¸ 
+   public int replyCount(int mno)
+   {
+	   int count=0;
+	   try
+	   {
+		   // 1. ì—°ê²°
+		   getConnection();
+		   // 2. SQLë¬¸ì¥ ì‘ì„± 
+		   String sql="SELECT COUNT(*) "
+				     +"FROM webReply "
+				     +"WHERE mno=?";
+		   // ì „ì†¡ ê°ì²´ ìƒì„±
+		   ps=conn.prepareStatement(sql);
+		   // ?ì— ê°’ì„ ì±„ìš´ì
+		   ps.setInt(1, mno);
+		   // ì‹¤í–‰ ìš”ì²­ 
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   count=rs.getInt(1);
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();//ì—°ê²° í•´ì œ
+	   }
+	   return count;
+   }
 }
+
