@@ -1,0 +1,52 @@
+<!-- 
+	disable 비 활성화
+	checked 선택된 경우
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+input:disabled{
+	background: #ddd;
+	border: 1px red solid;
+}
+input:checked+span{ /*눌리면, red로 바꿈*/
+	color:red;
+}
+/*
+	<input type=checkbox>
+	<input type=radio>
+	====================== checked
+	<select>
+	====================== selected
+*/
+</style>
+</head>
+<body>
+   <form>
+      <fieldset>
+         <legend>사용자 정보</legend>
+         <label>이름:<input type=text disabled size=15></label>
+      </fieldset>
+      <fieldset>
+         <legend>취업처</legend>
+         <p>과정을 배우면 어디 취업할까?</p>
+         <label><input type=radio name="job" value="개발"><span>개발</span></label> 
+         <!-- 
+         		SM / SI / 솔루션(pmax,...) / 프레임워크(맨텍,드림cis,클라우드웍스) *** 이쪽으로 가는게 가장 좋지 않을까...
+         	(구디/가디/상암)  (분당/판교) 		   (강남)
+         		상시 업체도 다 이쪽임. R&D도 많이 나옴. 일주일에 3-4개 씩?
+          -->
+          <label><input type=radio name="job" value="아이템"><span>아이템 기획</span></label>
+          <label><input type=radio name="job" value="설계"><span>설계</span></label>
+          <!-- 사이버다임 => 교육 되게 좋음. but 면접 되게 까다로움. 말로 코팅짜야 함. 부사장이 까탈스러워.
+          	   최근엔 칠판코딩. 땡 하면 가야함 -->
+          <label><input type=radio name="job" value="영업"><span>기술영업</span></label>
+          <label><input type=radio name="job" value="강사"><span>강사</span></label>
+          <!-- 3년차에 결정하면 됨 -->
+      </fieldset>
+   </form>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!-- 
+	가상 선택자
+	:hover => a, tr... (주로 메뉴 만들 때)
+	:focus
+	:active
+	
+	:enable => input
+	:disable
+	:checked ******
+	
+	:nth-child => li, table (목록이 나올 때)
+	
+	:not => 미포함(적용이 안 되게 만든다)
+	
+	::after => 선택한 태그 뒤에(new 붙일 때) 쇼핑몰에 많이 씀
+	::before
+	
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.nav ul{
+	list-style-type: none;
+	width: 600px;
+	/*background-color: blue;*/
+}
+.nav ul li{
+	width: 100px;
+	display: inline-block;
+}
+a{
+	color: black;
+	text-decoration: none;
+}
+/*마우스 갖다둘 때*/
+a:hover,a:focus{ 
+	background-color: red;
+	color: white;
+}
+/*클릭할 때 바뀜*/
+a:active{ 
+	background-color: green;
+}
+</style>
+</head>
+<body>
+   <div class="nav">
+      <ul>
+         <li><a href="#">홈</a></li>
+         <li><a href="#">현재상영영화</a></li>
+         <li><a href="#">개봉예정영화</a></li>
+         <li><a href="#">영화뉴스</a></li>
+         <li><a href="#">영화예매</a></li>
+      </ul>
+   </div>
+</body>
+</html>
