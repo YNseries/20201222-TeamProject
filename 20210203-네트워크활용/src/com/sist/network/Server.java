@@ -1,57 +1,59 @@
 package com.sist.network;
-import java.io.*; // ë„¤íŠ¸ì›Œí¬ ì…ì¶œë ¥ (C/S => Client : ìš”ì²­ , ì‘ë‹µì„ ë°›ì•„ì„œ ì¶œë ¥ , Server:ìš”ì²­ì„ ë°›ì•„ì„œ ì²˜ë¦¬í›„ì— ì‘ë‹µ)
+import java.io.*;  // ³×Æ®¿öÅ© ÀÔÃâ·Â(C/S => Client: ¿äÃ», ÀÀ´äÀ» ¹Ş¾Æ¼­ Ãâ·Â, Server: ¿äÃ»À» ¹Ş¾Æ¼­ Ã³¸® ÈÄ¿¡ ÀÀ´ä)
 import java.net.*;
 /*
- *   ë³¸ì¸ => ì„œë²„ 
- *          ===
- *          localhost , 127.0.0.1 , 211.238.142.181
- *          ======================  
+ *    º»ÀÎ => ¼­¹ö
+ *           ===
+ *           localhost, 127.0.0.1, 211.238.142.181
+ *           ====================  ===============
+ *           °³ÀÎÀûÀ¸·Î »ç¿ëÇÏ´Â         °øÀ¯µÇ´Â
  */
-public class Server implements Runnable{
-    // ì ‘ì† ë°›ëŠ” í´ë˜ìŠ¤ 
+public class Server implements Runnable {
+	// Á¢¼Ó¹Ş´Â Å¬·¡½º
 	ServerSocket ss;
-	final int PORT=3355;// 0~65535(0~1023) => í™”ìƒ(30000) , ìŒì„±(20000)  
-	// ì´ˆê¸°í™” 
-	// í•œê°œì˜ ì»´í“¨íƒ€ì—ì„œëŠ” ì„œë²„ëŠ” ë°˜ë“œì‹œ í•œë²ˆë§Œ ìˆ˜í–‰ 
-	// ì—¬ëŸ¬ë²ˆ ìˆ˜í–‰ë„ ê°€ëŠ¥ => PORTë¥¼ ë³€ê²½
+	final int PORT=3355;   // 0~65535(0~1023Àº »ç¿ëÁßÀÌ´Ï Á¦¿Ü) => È­»ó(30000¹ø´ë ÃßÃµ), À½¼º(20000¹ø´ë)
+	// ÃÊ±âÈ­
+	// ÇÑ°³ÀÇ ÄÄÇ»ÅÍ¿¡¼­ ¼­¹ö´Â ¹İµå½Ã ÇÑ ¹ø¸¸ ¼öÇà
+	// ¿©·¯¹ø ¼öÇàµµ °¡´É => PORT¸¦ º¯°æ
 	public Server()
 	{
 		try
 		{
-			ss=new ServerSocket(PORT);// ì»´í“¨í„° IPëŠ” ìë™ ì¸ì‹
+			ss=new ServerSocket(PORT);  // ÄÄÇ»ÅÍ IP´Â ÀÚµ¿ ÀÎ½Ä
 			/*
-			 *    => ip,port
-			 *    => ê°œí†µ bind(ip,port) => ì…‹íŒ… ì™„ë£Œ 
-			 *    => í´ë¼ì´ì–¸íŠ¸ê°€ ì ‘ê·¼ ëŒ€ê¸° => listen()
+			 *    => ip, port
+			 *    => °³Åë bind(ip,port) => ¼ÂÆÃ ¿Ï·á
+			 *    => Å¬¶óÀÌ¾ğÆ®°¡ Á¢±Ù ´ë±â => listen()
 			 */
 			System.out.println("Server Start...");
-		}catch(Exception ex) {ex.printStackTrace();}
+		}catch(Exception ex) {}
 	}
-	// í´ë¼ì´ì–¸íŠ¸ê°€ ì ‘ì†ì‹œ ì²˜ë¦¬ => ì •ë³´ ì €ì¥ 
+	// Å¬¶óÀÌ¾ğÆ®°¡ Á¢¼Ó½Ã Ã³¸® => Á¤º¸ ÀúÀå
 	public void run()
 	{
 		while(true)
 		{
 			try
 			{
-				Socket s=ss.accept(); // ì ‘ì†ì´ ëœ ìƒ¹íƒœì—ì„œë§Œ í˜¸ì¶œ  ==> ë°œì‹ ì ì •ë³´ (ip,port=>Socket)
+				Socket s=ss.accept();  // Á¢¼ÓÀÌ µÈ »óÅÂ¿¡¼­¸¸ È£Ãâ ==> ¹ß½ÅÀÚ Á¤º¸(ip, port => Socket)¸¦ ¹Ş¾Æ³ö¾ß ÇÔ
 				System.out.println("Client IP:"+s.getInetAddress().getHostAddress());
 				System.out.println("Client PORT:"+s.getPort());
 				/*
-				 *   ì„œë²„  =======> port(ê³ ì •)
-				 *   í´ë¼ì´ì–¸íŠ¸ ====> port(ê°€ë³€) => ìë™ ìƒì„± 
+				 *    ¼­¹ö =======> port(°íÁ¤)
+				 *    Å¬¶óÀÌ¾ğÆ® ===> port(°¡º¯) => ÀÚµ¿ »ı¼º
 				 */
-				// í´ë¼ì´ì–¸íŠ¸ ë©”ì„¸ì§€ ì „ì†¡ 
+				// Å¬¶óÀÌ¾ğÆ® ¸Ş¼¼Áö Àü¼Û
 				OutputStream out=s.getOutputStream();
-				// s=> í´ë¼ì´ì–¸íŠ¸ 
-				out.write("ì•ˆë…•í•˜ì„¸ìš”!! ì„œë²„ì— ì—°ê²°ë˜ì—ˆìŠµë‹ˆë‹¤\n".getBytes());//ì¸ì½”ë”©
-			}catch(Exception ex){}
+				// s => Å¬¶óÀÌ¾ğÆ®
+				out.write("¾È³çÇÏ¼¼¿ä!! ¼­¹ö¿¡ ¿¬°áµÇ¾ú½À´Ï´Ù\n".getBytes());  // ÀÎÄÚµù
+			}catch(Exception ex) {ex.printStackTrace();}
 		}
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-        Server server=new Server();
-        new Thread(server).start();// serverê°€ ê°€ì§€ê³  ìˆëŠ” run()ì„ í˜¸ì¶œ 
+		Server server=new Server();
+		new Thread(server).start();  // server°¡ °¡Áö°íÀÖ´Â run()À» È£Ãâ
+		
 	}
 
 }

@@ -5,14 +5,15 @@ public class Client {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-        try
-        {
-        	Socket s=new Socket("localhost",3355);
-        	BufferedReader in=new BufferedReader(new InputStreamReader(s.getInputStream()));
-        	// s=ì„œë²„
-        	String msg=in.readLine();
-        	System.out.println(msg);
-        }catch(Exception ex) {}
+		try
+		{
+			Socket s=new Socket("211.238.142.181",3355);   // µÚ¿¡ ¼ýÀÚ´Â ¼­¹öÆ÷Æ® Áà¾ß ÇÔ
+			// °­ÀÇ½Ç ³»ºÎ¿¡¼­¸¸ Á¢±Ù °¡´É. Áßº¹µÇ´Â port ¾øÀ½
+			BufferedReader in=new BufferedReader(new InputStreamReader(s.getInputStream()));
+			// s=¼­¹ö
+			String msg=in.readLine();
+			System.out.println(msg);
+		}catch(Exception ex) {}
 	}
-
+	
 }

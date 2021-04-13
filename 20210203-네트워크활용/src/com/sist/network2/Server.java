@@ -1,136 +1,135 @@
 package com.sist.network2;
-import java.io.*;// ë„¤íŠ¸ì›Œí¬(í´ë¼ì´ì–¸íŠ¸ì™€ ì„œë²„ì˜ ì…ì¶œë ¥) ì „ì†¡:OutputStream , ìˆ˜ì‹ :BufferedReader
-import java.net.*;// ServerSocket(ì ‘ì†ì„ ë°›ì€ ê²½ìš°) , Socket(í´ë¼ì´ì–¸íŠ¸ ì •ë³´)=>IP,PORT(ìë™ì§€ì •=ì¤‘ë³µì—†ì´)
-import java.util.*;// Collection(í´ë¼ì´ì–¸íŠ¸ì˜ ì •ë³´ë¥¼ ì €ì¥=>ë™ê¸°í™” => Vector)
+import java.io.*;  // ³×Æ®¿öÅ©(Å¬¶óÀÌ¾ğÆ®¿Í ¼­¹öÀÇ ÀÔÃâ·Â) Àü¼Û: OutputStream, ¼ö½Å: BufferedReader
+import java.net.*;  // ServerSocket(Á¢¼ÓÀ» ¹ŞÀº °æ¿ì), Socket(Å¬¶óÀÌ¾ğÆ® Á¤º¸) => IP,PORT(ÀÚµ¿ÁöÁ¤/Áßº¹ ¾øÀÌ)
+import java.util.*;  // Collection(Å¬¶óÀÌ¾ğÆ®ÀÇ Á¤º¸¸¦ ÀúÀå => µ¿±âÈ­ ÇÊ¿ä => Vector)
 /*
- *    ìë°”
- *    ***ì˜¤ë¼í´ 
- *    ====== ìë°”+ì˜¤ë¼í´ (JDBC)
+ *    ÀÚ¹Ù
+ *    ***¿À¶óÅ¬
+ *    ===== ÀÚ¹Ù+¿À¶óÅ¬ (JDBC)
  *    HTML
  *    CSS
- *    JavaScript => Jquery , VueJs 
- *    =========== (ìë°”: ë””ìì¸íŒ¨í„´ , XML ,ANNOTATION)
- *    JSP 
- *    =========== ìë°”+ì˜¤ë¼í´ +HTML
- *    MVC 
- *    ***Spring 
- *    ============================================
+ *    JavaScript + JQuery, VueJs
+ *    ========== (ÀÚ¹Ù: µğÀÚÀÎÆĞÅÏ, XML, ANNOTATION)
+ *    JSP
+ *    ========== ÀÚ¹Ù+¿À¶óÅ¬+HTML
+ *    MVC
+ *    ***Spring
+ *    ==========================================
  *    
- *    Collection : ìë£Œêµ¬ì¡° (ë©”ëª¨ë¦¬ì— ì €ì¥í•˜ê³  ê´€ë¦¬ => CURD) => í‘œì¤€í™” 
- *    ===========
- *       List : ìˆœì„œë¥¼ ê°€ì§€ê³  ìˆë‹¤(ì¸ë±ìŠ¤ë²ˆí˜¸) , ë°ì´í„°ë¥¼ ì¤‘ë³µí•´ì„œ ì €ì¥ì´ ê°€ëŠ¥ 
- *              **ArrayList : Vectorë¥¼ ë³´ì™„í•œ í´ë˜ìŠ¤ (ë¹„ë™ê¸°í™”) => ë°ì´í„°ë² ì´ìŠ¤ í”„ë¡œê·¸ë¨ (ì›¹,ERP)
- *              **Vector : ë™ê¸°í™” => ë„¤íŠ¸ì›Œí¬ (ê²Œì„,ëª¨ë°”ì¼)
- *              LinkedList : Cì–¸ì–´ í˜¸í™˜ 
- *              Stack => coding test
- *       Set : ìˆœì„œê°€ ì—†ë‹¤ , ë°ì´í„° ì¤‘ë³µ(X)
+ *    Collection: ÀÚ·á±¸Á¶(¸Ş¸ğ¸®¿¡ ÀúÀåÇÏ°í °ü¸® => CURD) => Ç¥ÁØÈ­
+ *    ==========
+ *       List: ¼ø¼­¸¦ °¡Áö°í ÀÖ´Ù(index¹øÈ£) = µ¥ÀÌÅÍ¸¦ Áßº¹ÇØ¼­ ÀúÀåÀÌ °¡´É
+ *             **ArrayList: Vector¸¦ º¸¿ÏÇÑ Å¬·¡½º(ºñµ¿±âÈ­) => µ¥ÀÌÅÍº£ÀÌ½º ÇÁ·Î±×·¥(À¥, ERP)
+ *             **Vector: µ¿±âÈ­ => ³×Æ®¿öÅ©(°ÔÀÓ, ¸ğ¹ÙÀÏ)
+ *             LinkedList: C¾ğ¾î È£È¯
+ *             Stack => coding test
+ *       Set : ¼ø¼­°¡ ¾ø´Ù, ¶§¹®¿¡ µ¥ÀÌÅÍ Áßº¹µÇ¸é ¾ÈµÊ
  *             HashSet
- *       Map : ë‘ê°œ ì €ì¥(í‚¤,ê°’) => í‚¤ë¥¼ ê°€ì§€ê³  ê°’ì„ ì°¾ëŠ”ë‹¤ 
- *             í‚¤ëŠ” ì¤‘ë³µì´ ì—†ë‹¤ , ê°’ì€ ì¤‘ë³µì´ ê°€ëŠ¥ 
- *             => ì›¹ (session,cookie, request, response) => Spring,Mybatis (Map)
+ *       Map : µÎ °³ ÀúÀå(Å°, °ª) => Å°¸¦ °¡Áö°í °ªÀ» Ã£´Â´Ù
+ *             Å°´Â Áßº¹ X, °ªÀº Áßº¹ °¡´É
+ *             => À¥(session, cookie, request, response) => Spring, MyBatis(Map¿¡ ÀúÀå)
  */
 public class Server implements Runnable{
-    private Vector<Client> waitVc=new Vector<Client>();// í´ë¼ì´ì–¸íŠ¸ ì •ë³´ë¥¼ ì €ì¥ 
-    private ServerSocket ss;
-    private final int PORT=3355;
-    /*
-     *   ì—­í•  ë¶„ë‹´ 
-     *     = ì ‘ì†ë§Œ ë‹´ë‹¹ 
-     *     = ê° í´ë¼ì´ì–¸íŠ¸ë§ˆë‹¤ í†µì‹  ë‹´ë‹¹
-     *       ========== ì“°ë ˆë“œ => ë‚´ë¶€í´ë˜ìŠ¤ 
-     */
-    //1. ì„œë²„ ê°€ë™
-    public Server() 
-    {
-    	try
-    	{
-    		ss=new ServerSocket(PORT);// bind():ê°œí†µ,listen():ëŒ€ê¸°ìƒíƒœ 
-    		System.out.println("Server Start...");
-    	}catch(Exception ex) 
-    	{
-    		ex.printStackTrace();
-    	}
-    }
-    /*
-     *    ë™ì‘ 
-     *     1. ì„œë²„ ê°€ë™ 
-     *     2. ì ‘ì†ì‹œ ì²˜ë¦¬ 
-     *        => ë©”ëª¨ë¦¬ì— ì €ì¥(í´ë¼ì´ì–¸íŠ¸ì˜ ì •ë³´ë¥¼ ì €ì¥)
-     *        => í´ë¼ì´ì–¸íŠ¸ì™€ í†µì‹  ëª…ë ¹ 
-     */
-    // 2. ì ‘ì†ì‹œì— ì²˜ë¦¬ => í´ë¼ì´ì–¸íŠ¸ë¥¼ Vectorì— ì €ì¥ 
-    public void run()
-    {
-    	try
-    	{
-    		while(true)
-    		{
-    			Socket s=ss.accept();// ë°œì‹ ì ì •ë³´(ip+port=Socket)ë¥¼ ê°€ì§€ê³  ì˜¨ë‹¤ 
-    			// ì“°ë ˆë“œì™€ í†µì‹ ì´ ê°€ëŠ¥í•˜ê²Œ => ì“°ë ˆë“œ ìƒì„± => í•´ë‹¹ í´ë¼ì´ì–¸íŠ¸ì˜ Socketì„ ë„˜ê²¨ì¤€ë‹¤ 
-    			Client client=new Client(s); // ì“°ë ˆë“œë§ˆë‹¤ í´ë¼ì´ì–¸íŠ¸ë¥¼ ë‹´ë‹¹í•œë‹¤
-    			waitVc.add(client);// í´ë¼ì´ì–¸íŠ¸ ì •ë³´ë¥¼ ì €ì¥ 
-    			client.start();// í´ë¼ì´ì–¸íŠ¸ì™€ í†µì‹ ì„ ì‹œì‘í•œë‹¤ 
-    		}
-    	}catch(Exception ex){}
-    }
+	private Vector<Client> waitVc=new Vector<Client>();  //Å¬¶óÀÌ¾ğÆ® Á¤º¸¸¦ ÀúÀå
+	private ServerSocket ss;
+	private final int PORT=3355;
+	/*
+	 *    ¿ªÇÒ ºĞ´ã
+	 *      = Á¢¼Ó¸¸ ´ã´ç
+	 *      = °¢ Å¬¶óÀÌ¾ğÆ® ¸¶´Ù Åë½Å ´ã´ç
+	 *        ========= ¾²·¹µå => ³»ºÎÅ¬·¡½º
+	 */
+	// 1. ¼­¹ö °¡µ¿
+	public Server()
+	{
+		try
+		{
+			ss=new ServerSocket(PORT);  // bind(): °³Åë, Listen(): ´ë±â»óÅÂ
+			System.out.println("Server Start...");
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+	/*
+	 *   µ¿ÀÛ
+	 *    1. ¼­¹ö °¡µ¿
+	 *    2. Á¢¼Ó½Ã Ã³¸®
+	 *       => ¸Ş¸ğ¸®¿¡ ÀúÀå(Å¬¶óÀÌ¾ğÆ®ÀÇ Á¤º¸¸¦ ÀúÀå)
+     *       => Å¬¶óÀÌ¾ğÆ®¿Í Åë½Å ¸í·É 
+	 */
+	// 2. Á¢¼Ó½Ã¿¡ Ã³¸® => Å¬¶óÀÌ¾ğÆ®¸¦ Vector¿¡ ÀúÀå
+	public void run()
+	{
+		try
+		{
+			while(true)
+			{
+				Socket s=ss.accept();  // ¹ß½ÅÀÚ Á¤º¸(IP+PORT=Socket)¸¦ °¡Áö°í ¿Â´Ù
+				// ¾²·¹µå¿Í Åë½ÅÀÌ °¡´ÉÇÏ°Ô => ¾²·¹µå »ı¼º => ÇØ´ç Å¬¶óÀÌ¾ğÆ®ÀÇ SocketÀ» ³Ñ°ÜÁØ´Ù
+				Client client=new Client(s);  // ¾²·¹µå¸¶´Ù Å¬¶óÀÌ¾ğÆ®¸¦ ´ã´çÇÑ´Ù
+				waitVc.add(client);  // Å¬¶óÀÌ¾ğÆ® Á¤º¸¸¦ ÀúÀå
+				client.start();  // Å¬¶óÀÌ¾ğÆ®¿Í Åë½ÅÀ» ½ÃÀÛÇÑ´Ù
+			}
+		}catch(Exception ex) {ex.printStackTrace();}
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-        Server server=new Server();// ì„œë²„ ê°€ë™ 
-        new Thread(server).start();// ì ‘ì†ì‹œ ì²˜ë¦¬ 
+		Server server=new Server();  // ¼­¹ö °¡µ¿
+		new Thread(server).start();  // Á¢¼Ó½Ã Ã³¸®
 	}
-	// í†µì‹ ì„ ë‹´ë‹¹í•˜ëŠ” í´ë˜ìŠ¤ 
+	// Åë½ÅÀ» ´ã´çÇÏ´Â Å¬·¡½º
 	class Client extends Thread
 	{
-		// ê° í´ë¼ì´ì–¸íŠ¸ ë§ˆë‹¤ í†µì‹ ì„ ë‹´ë‹¹ 
-		//1. í´ë¼ì´ì–¸íŠ¸ì˜ ì •ë³´ (ip,port=>Socket)
+		// °¢ Å¬¶óÀÌ¾ğÆ®¸¶´Ù Åë½ÅÀ» ´ã´ç. °®°íÀÖ¾î¾ß ÇÒ °Íµé
+		// 1. Å¬¶óÀÌ¾ğÆ®ÀÇ Á¤º¸(ip, port = Socket)
 		Socket s;
-		//2. í´ë¼ì´ì–¸íŠ¸ì™€ í†µì‹ í•˜ê¸° ìœ„í•´ì„œëŠ” IO(ì…ì¶œë ¥)
-		BufferedReader in;// í´ë¼ì´ì–¸íŠ¸ì˜ ìš”ì²­ê°’ì„ ë°›ëŠ” ê²½ìš°
-		OutputStream out;// ìš”ì²­ ì²˜ë¦¬í›„ì— ì‘ë‹µí•  ë•Œ ì‚¬ìš© 
+		// 2. Å¬¶óÀÌ¾ğÆ®¿Í Åë½ÅÇÏ±â À§ÇØ¼­ IO(ÀÔÃâ·Â)
+		BufferedReader in;  // Å¬¶óÀÌ¾ğÆ®ÀÇ ¿äÃ»°ªÀ» ¹Ş´Â °æ¿ì
+		OutputStream out;   // ¿äÃ» Ã³¸® ÈÄ¿¡ ÀÀ´äÇÒ ¶§ »ç¿ë
 		
-		// ìƒì„±ìë¥¼ ì´ìš©í•´ì„œ => Serverí´ë˜ìŠ¤ë¡œ ë¶€í„° Socket(ip)
+		// »ı¼ºÀÚ¸¦ ÀÌ¿ëÇØ¼­ => ServerÅ¬·¡½º·ÎºÎÅÍ Socket(ip)
 		public Client(Socket s)
 		{
 			try
 			{
-				this.s=s;// s=í´ë¼ì´ì–¸íŠ¸ 
+				this.s=s;  // s=Å¬¶óÀÌ¾ğÆ®
 				out=s.getOutputStream();
 				in=new BufferedReader(new InputStreamReader(s.getInputStream(),"UTF-8"));
-			}catch(Exception ex) {}
+			}catch(Exception ex) {ex.printStackTrace();}
 		}
-		// í†µì‹  ë‚´ìš© 
+		// Åë½Å ³»¿ë
 		public void run()
 		{
 			try
 			{
 				while(true)
 				{
-					// ì‚¬ìš©ìì˜ ìš”ì²­ ë‚´ìš©ì„ ë°›ëŠ”ë‹¤ 
+					// »ç¿ëÀÚÀÇ ¿äÃ» ³»¿ëÀ» ¹Ş´Â´Ù
 					String msg=in.readLine();
 					messageAll(msg);
 				}
-			}catch(Exception ex){}
+			}catch(Exception ex) {ex.printStackTrace();}
 		}
-		// ë©”ì„¸ì§€ ì „ì†¡ ë©”ì†Œë“œ 
-		//1. ê°œì¸ì ìœ¼ë¡œ ì „ì†¡ => ìª½ì§€ë³´ë‚´ê¸°,ê·“ì†ë§ 
+		// ¸Ş½ÃÁö Àü¼Û ¸Ş¼Òµå
+		// 1. °³ÀÎÀûÀ¸·Î Àü¼Û => ÂÊÁöº¸³»±â, ±Ó¼Ó¸»
 		/*
-		 * transient String name; => nameì€ ì œì™¸
-		 * synchronized => ë™ê¸°í™”
-		 * => ì“°ë ˆë“œì˜ default (ë¹„ë™ê¸°í™”)
-		 * 
-		 *    sync function aaa(){}
-		 *    async function bbb(){}
-		 *    ajax => ì‹¤ì‹œê°„ 
+		 *    transient String name; => nameÀº Á¦¿Ü(Á¦¿Ü½ÃÅ³ °ÍÀÌ ÀÖÀ» ¶§ º¯¼ö ¾Õ¿¡ ¾²¸é µÊ)
+		 *    synchronized => µ¿±âÈ­
+		 *    => ¾²·¹µåÀÇ default(ºñµ¿±âÈ­) µ¥ÀÌÅÍ°¡ Ãæµ¹µÉ ¿°·Á°¡ ÀÖÀ½
+		 *    
+		 *       sync function aaa(){}
+		 *       async function bbb(){}
+		 *       ajax => ½Ç½Ã°£
 		 */
-		
 		public synchronized void messageTo(String msg)
 		{
 			try
 			{
 				out.write((msg+"\n").getBytes());
-			}catch(Exception ex){}
+			}catch(Exception ex) {ex.printStackTrace();}
 		}
-		//2. ì „ì²´ì ìœ¼ë¡œ ì „ì†¡ => ì±„íŒ… 
+		// 2. ÀüÃ¼ÀûÀ¸·Î Àü¼Û => Ã¤ÆÃ
 		public synchronized void messageAll(String msg)
 		{
 			try
@@ -139,7 +138,7 @@ public class Server implements Runnable{
 				{
 					client.messageTo(msg);
 				}
-			}catch(Exception ex){}
+			}catch(Exception ex) {ex.printStackTrace();}
 		}
 	}
 

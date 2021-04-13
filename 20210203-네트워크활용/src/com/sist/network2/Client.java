@@ -2,66 +2,66 @@ package com.sist.network2;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-// ë„¤íŠ¸ì›Œí¬ ê´€ë ¨ 
-import java.net.*;// Socket => ì—°ê²°(ì„œë²„)
-import java.io.*;// ì„œë²„ë¡œ ë³´ë‚´ê¸° (OutputStream), ì„œë²„ë¡œë¶€í„° ë°›ê¸°(BufferedReader) 
+// ³×Æ®¿öÅ© °ü·Ã
+import java.net.*;  // Socket => ¿¬°á(Server)
+import java.io.*;  // ¼­¹ö·Î º¸³»±â(OutputStream), ¼­¹ö·ÎºÎÅÍ ¹Þ±â(BufferedReader)
 public class Client extends JFrame implements ActionListener,Runnable{
-    JTextField tf; // ì±„íŒ… ìž…ë ¥ 
-    JTextArea ta; // ì±„íŒ… ì¶œë ¥ 
-    JButton b1,b2;// ì ‘ì† , ì¢…ë£Œ 
-    // ë„¤íŠ¸ì›Œí¬ ê´€ë ¨ í´ëž˜ìŠ¤
-    Socket s;
-    OutputStream out;
-    BufferedReader in;
-    String name;
-    JScrollBar bar;
-    /*
-     *   1. ì„œë²„ì— ì ‘ì† : ì ‘ì†ë²„íŠ¼ 
-     *   2. ì±„íŒ… ë¬¸ìžì—´ì„ ë³´ë‚¸ë‹¤ : JTextField => Enterì‹œì— ë°ì´í„° ì „ì†¡ 
-     *   3. ì„œë²„ë¡œë¶€í„° ì±„íŒ…ë¬¸ìžì—´ì„ ë°›ì•„ì„œ ì¶œë ¥ => ì‹¤ì‹œê°„ (ì“°ë ˆë“œ) => ì„œë²„ ê°ì‹œ 
-     *   ==================== Output , Input 
-     *                       ========  =====
-     *                         ì†¡ì‹       ìˆ˜ì‹  ==> ì†¡ì‹ /ìˆ˜ì‹ (ì–‘ë°©í–¥ì„ í•  ìˆ˜ ì—†ë‹¤)
-     */
-    // ì´ˆê¸°í™” 
-    public Client()
-    {
-    	tf=new JTextField(20);
-    	tf.setEnabled(false);
-    	b1=new JButton("ì ‘ì†");
-    	b2=new JButton("ì¢…ë£Œ");
-    	ta=new JTextArea();
-    	ta.setEditable(false);
-    	JScrollPane js=new JScrollPane(ta); // V , H
-    	bar=js.getVerticalScrollBar();
-    	// ë°°ì¹˜
-    	add("Center",js);
-    	JPanel p=new JPanel();
-    	p.add(tf);p.add(b1);p.add(b2);
-    	add("South",p);
-    	
-    	// ìœˆë„ìš° í¬ê¸°
-    	setSize(400, 450);
-    	setVisible(true);
-    	
-    	// ë²„íŠ¼ì„ ëˆ„ë¥´ë©´ actionPerformedë¥¼ í˜¸ì¶œ í•´ë¼(ì´ë²¤íŠ¸ ì²˜ë¦¬:ì‚¬ê±´)
-    	b1.addActionListener(this);
-    	// Clientê°€ ê°€ì§€ê³  ìžˆëŠ” actionPerformed(ActionEvent e) í˜¸ì¶œ
-    	// ====== Clientì˜ ìžì‹  : this
-    	b2.addActionListener(this);
-    	tf.addActionListener(this);
-    	/*
-    	 *   ActionListener => actionPerformed(ActionEvent e)
-    	 *   ==============
-    	 *     buttonì¢…ë¥˜ (JButton,JRadioButton)
-    	 *     textfield => Enter
-    	 *     menuItem
-    	 */
-    	
-    }
+	JTextField tf; // Ã¤ÆÃ ÀÔ·Â
+	JTextArea ta;  // Ã¤ÆÃ Ãâ·Â
+	JButton b1,b2; // Á¢¼Ó, Á¾·á
+	
+	// ³×Æ®¿öÅ© °ü·Ã Å¬·¡½º
+	Socket s;
+	OutputStream out;
+	BufferedReader in;
+	String name;
+	JScrollBar bar;
+	/*
+	 *    1. ¼­¹ö¿¡ Á¢¼Ó: Á¢¼Ó¹öÆ°
+	 *    2. Ã¤ÆÃ ¹®ÀÚ¿­À» º¸³½´Ù: JTextField => Enter½Ã¿¡ µ¥ÀÌÅÍ Àü¼Û
+	 *    3. ¼­¹ö·ÎºÎÅÍ Ã¤ÆÃ¹®ÀÚ¿­À» ¹Þ¾Æ¼­ Ãâ·Â => ½Ç½Ã°£(¾²·¹µå) => ¼­¹ö °¨½Ã
+	 *       ============== Output, Input
+	 *                      ======  =====
+	 *                        ¼Û½Å     ¼ö½Å  ==> ¼Û½Å/¼ö½Å(¾ç¹æÇâÀ» ÇÒ ¼ö ¾ø´Ù)
+	 */
+	// ÃÊ±âÈ­
+	public Client()
+	{
+		tf=new JTextField(20);
+		tf.setEnabled(false); // Á¢¼Ó ´©¸¥ ´ÙÀ½ ±Û ¾µ ¼ö ÀÖ°Ô ÇÏ·Á°í ºñÈ°¼ºÈ­
+		b1=new JButton("Á¢¼Ó");
+		b2=new JButton("Á¾·á");
+		ta=new JTextArea();  // ½ºÅ©·ÑÀÌ ¾ø¾î ±¸¿ª Áö³ª¸é »ç¶óÁü
+		ta.setEditable(false);  // ÀÐÀ» ¼ö ÀÖ´Â ±¸¿ª¿¡ ±Û ¾µ ¼ö ÀÖ´ø °Í ºñÈ°¼ºÈ­
+		JScrollPane js=new JScrollPane(ta);  // Vertical, Horizontal
+		bar=js.getVerticalScrollBar();
+		// ¹èÄ¡
+		add("Center",js);
+		JPanel p=new JPanel();
+		p.add(tf);p.add(b1);p.add(b2);
+		add("South",p);
+		
+		// À©µµ¿ì Å©±â
+		setSize(400,450);
+		setVisible(true);
+		
+		// ¹öÆ°À» ´©¸£¸é actionPerformed¸¦ È£Ãâ(eventÃ³¸®: »ç°Ç)
+		b1.addActionListener(this);
+		// Client°¡ °¡Áö°í ÀÖ´Â actionPerformed(ActionEvent e) È£Ãâ
+		// ====== ClientÀÇ ÀÚ½Ä: this
+		b2.addActionListener(this);
+		tf.addActionListener(this);
+		/*
+		 *   ActionListener => actionPerformed(ActionEvent e)
+		 *   ==============
+		 *     button Á¾·ù(JButton, JRadioButton)
+		 *     textField => Enter
+		 *     menuItem
+		 */
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-        // ìƒì„±ìž
+		// »ý¼ºÀÚ
 		new Client();
 	}
 	@Override
@@ -69,43 +69,42 @@ public class Client extends JFrame implements ActionListener,Runnable{
 		// TODO Auto-generated method stub
 		if(e.getSource()==b2)
 		{
-			System.exit(0);// í”„ë¡œê·¸ëž¨ ì¢…ë£Œ
+			System.exit(0);  // ÇÁ·Î±×·¥ Á¾·á
 		}
-		else if(e.getSource()==b1)//ì ‘ì†
+		else if(e.getSource()==b1)  // Á¢¼Ó
 		{
-			name=JOptionPane.showInputDialog("ëŒ€í™”ëª… ìž…ë ¥:");// [í™ê¸¸ë™] Hi
-			// ì—°ê²°
+			name=JOptionPane.showInputDialog("´ëÈ­¸í ÀÔ·Â:");  // [È«±æµ¿] Hi
+			// ¿¬°á
 			try
 			{
-				s=new Socket("localhost",3355);  // localhost ìœ„ì¹˜ì— ì‹¤ì œ ê°’ì„ ë„£ì–´ ê·¸ ì»´í“¨í„°ì™€ ì—°ê²°í•´ ë‹¨ì²´ ì±„íŒ…ì„ í•  ìˆ˜ ìžˆìŒ
-				// ì„œë²„ë¡œë¶€í„° ì½ì–´ì˜¤ëŠ” ìœ„ì¹˜ í™•ì¸ => in
+				s=new Socket("localhost",3355);
+				// ¼­¹ö·ÎºÎÅÍ ÀÐ¾î¿À´Â À§Ä¡ È®ÀÎ => in
 				in=new BufferedReader(new InputStreamReader(s.getInputStream(),"UTF-8"));
-				// ì„œë²„ì— ê°’ì„ ë³´ë‚´ëŠ” ìœ„ì¹˜ í™•ì¸  => out
+				// ¼­¹ö¿¡ °ªÀ» º¸³»´Â À§Ä¡ È®ÀÎ => out
 				out=s.getOutputStream();
-			}catch(Exception ex){}
+			}catch(Exception ex) {ex.printStackTrace();}
 			
-			//ì—°ê²°ì´ ë˜ë©´ => í†µì‹ ì„ ì‹œìž‘í•´ë¼ 
+			// ¿¬°áÀÌ µÇ¸é => Åë½ÅÀ» ½ÃÀÛÇØ¶ó
 			new Thread(this).start();
-			tf.setEnabled(true);
-			tf.requestFocus();
-			b1.setEnabled(false);// ì ‘ì† ë²„íŠ¼ ë¹„í™œì„±í™” 
-			
+			tf.setEnabled(true);  // Á¢¼ÓÀÌ µÇ¸é, È°¼ºÈ­
+			tf.requestFocus();  // Ä¿¼­ ±ôºýÀÌ
+			b1.setEnabled(false);  // Á¢¼Ó¹öÆ° ºñÈ°¼ºÈ­
 		}
-		else if(e.getSource()==tf)// ë¬¸ìžë¥¼ ìž…ë ¥í•˜ê³  Enterì‹œ => ìž…ë ¥í•œ ê°’ì„ ì½ì–´ì„œ ì„œë²„ë¡œ ì „ì†¡ 
+		else if(e.getSource()==tf)  // ¹®ÀÚ¸¦ ÀÔ·ÂÇÏ°í Enter´©¸£¸é => ÀÔ·ÂÇÑ °ªÀ» ÀÐ¾î¼­ ¼­¹ö·Î Àü¼Û
 		{
 			try
 			{
-				// ìž…ë ¥ëœ ë¬¸ìžì—´ì„ ì½ì–´ ì˜¨ë‹¤ 
+				// ÀÔ·ÂµÈ ¹®ÀÚ¿­À» ÀÐ¾î ¿Â´Ù
 				String msg=tf.getText();
 				if(msg.length()<1)
 					return;
-				// ì„œë²„ë¡œ ì „ì†¡ 
+				// ¼­¹ö·Î Àü¼Û
 				out.write(("["+name+"] "+msg+"\n").getBytes());
 				tf.setText("");
-			}catch(Exception ex) {}
+			}catch(Exception ex) {ex.printStackTrace();}
 		}
 	}
-	// ì„œë²„ë¡œë¶€í„° ë“¤ì–´ì˜¤ëŠ” ë°ì´í„°ë¥¼ ì½ì–´ì„œ(ì‹¤ì‹œê°„) JTextAreaì— ì¶œë ¥ 
+	// ¼­¹ö·ÎºÎÅÍ µé¾î¿À´Â µ¥ÀÌÅÍ¸¦ (½Ç½Ã°£À¸·Î)ÀÐ¾î¼­ JTextArea¿¡ Ãâ·ÂÇÏ´Â ¿ªÇÒ
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -117,7 +116,7 @@ public class Client extends JFrame implements ActionListener,Runnable{
 				ta.append(msg+"\n");
 				bar.setValue(bar.getMaximum());
 			}
-		}catch(Exception ex){}
+		}catch(Exception ex) {ex.printStackTrace();}
 	}
 
 }
