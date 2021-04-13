@@ -7,20 +7,20 @@ public class MovieManager {
     {
     	try
     	{
-    		// íŒŒì¼ ì½ê¸° 
+    		// ÆÄÀÏ ÀĞ±â 
     		FileInputStream fis=new FileInputStream("c:\\download\\movie.txt");
-    		// ê°ì²´ë‹¨ìœ„ë¡œ ë³€ê²½ : ì—­ì§ë ¬í™” 
+    		// °´Ã¼´ÜÀ§·Î º¯°æ : ¿ªÁ÷·ÄÈ­ 
     		ObjectInputStream oos=new ObjectInputStream(fis);
-    		// ArrayListì— ê°’ì„ ì±„ì›Œì¤€ë‹¤
+    		// ArrayList¿¡ °ªÀ» Ã¤¿öÁØ´Ù
     		list=(ArrayList<MovieVO>)oos.readObject();
     		oos.close();
     	}catch(Exception ex){}
     }
-    // ê¸°ëŠ¥ => ë©”ì†Œë“œ 
-    // 1. ì „ì²´ ëª©ë¡ ì¶œë ¥ => í˜ì´ì§€ ë‚˜ëˆ„ê¸° 
+    // ±â´É => ¸Ş¼Òµå 
+    // 1. ÀüÃ¼ ¸ñ·Ï Ãâ·Â => ÆäÀÌÁö ³ª´©±â 
     /*
-     *   ìœˆë„ìš°ì°½ => ì‚¬ìš©ì ìš”ì²­ => 2í˜ì´ì§€ ë³´ì—¬ë‹¬ë¼ => MovieManagerì²˜ë¦¬ => ê²°ê³¼ê°’ => ìœˆë„ìš° 
-     *     ì›¹(ë¸Œë¼ìš°ì €) 
+     *   À©µµ¿ìÃ¢ => »ç¿ëÀÚ ¿äÃ» => 2ÆäÀÌÁö º¸¿©´Ş¶ó => MovieManagerÃ³¸® => °á°ú°ª => À©µµ¿ì 
+     *     À¥(ºê¶ó¿ìÀú) 
      */
     public ArrayList<MovieVO> movieListData(int page)
     {
@@ -36,7 +36,7 @@ public class MovieManager {
     	//System.out.println(total);
     	if(page==total)
     	{
-    		rowSize=list.size()%20;// ë°ì´í„°ì´ê°¯ìˆ˜%20 => 219%20 = 19 219 => 220
+    		rowSize=list.size()%20;// µ¥ÀÌÅÍÃÑ°¹¼ö%20 => 219%20 = 19 219 => 220
     		// 219%20
     		// 11%20 ==> 11
     	}
@@ -48,16 +48,16 @@ public class MovieManager {
     	}
     	return mList;
     }
-    // 1-1. ì´í˜ì´ì§€ êµ¬í•˜ê¸°
+    // 1-1. ÃÑÆäÀÌÁö ±¸ÇÏ±â
     public int movieTotalPage()
     {
     	return (int)(Math.ceil(list.size()/20.0)); //219/20 => 11
-    	// ceil => ì˜¬ë¦¼ ë©”ì†Œë“œ => ì†Œìˆ˜ì ì´í•˜ê°€ 1ì´ìƒì´ë©´ ì˜¬ë¦¼
+    	// ceil => ¿Ã¸² ¸Ş¼Òµå => ¼Ò¼öÁ¡ÀÌÇÏ°¡ 1ÀÌ»óÀÌ¸é ¿Ã¸²
     	// random() , ceil()
     }
-    // 2. ì¹´í…Œê³ ë¦¬ë³„ ì¶œë ¥ => í˜ì´ì§€ ë‚˜ëˆ„ê¸°
-    // 3. ê²€ìƒ‰ : ì œëª©ë³„  => í˜ì´ì§€ ë‚˜ëˆ„ê¸° 
-    // 4. ê²€ìƒ‰ : ì¥ë¥´ë³„  => í˜ì´ì§€ ë‚˜ëˆ„ê¸° => ì‚¬ëŒì´ í•œëˆˆì— ë³¼ìˆ˜ ìˆëŠ” í™”ë©´(ê·¸ë¦¼ 15)
+    // 2. Ä«Å×°í¸®º° Ãâ·Â => ÆäÀÌÁö ³ª´©±â
+    // 3. °Ë»ö : Á¦¸ñº°  => ÆäÀÌÁö ³ª´©±â 
+    // 4. °Ë»ö : Àå¸£º°  => ÆäÀÌÁö ³ª´©±â => »ç¶÷ÀÌ ÇÑ´«¿¡ º¼¼ö ÀÖ´Â È­¸é(±×¸² 15)
     
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -79,19 +79,19 @@ public class MovieManager {
         }*/
 		/*Scanner scan=new Scanner(System.in);
 		String[] menu={
-				"1. í˜„ì¬ ìƒì˜ ì˜í™”",
-				"2. ê°œë´‰ ì˜ˆì • ì˜í™”",
-				"3. ë°•ìŠ¤ì˜¤í”¼ìŠ¤(ì£¼ê°„)",
-				"4. ë°•ìŠ¤ì˜¤í”¼ìŠ¤(ì›”ê°„)",
-				"5. ë°•ìŠ¤ì˜¤í”¼ìŠ¤(ì—°ê°„)"
+				"1. ÇöÀç »ó¿µ ¿µÈ­",
+				"2. °³ºÀ ¿¹Á¤ ¿µÈ­",
+				"3. ¹Ú½º¿ÀÇÇ½º(ÁÖ°£)",
+				"4. ¹Ú½º¿ÀÇÇ½º(¿ù°£)",
+				"5. ¹Ú½º¿ÀÇÇ½º(¿¬°£)"
 		};
-		System.out.println("========== ë©”ë‰´ ==========");
+		System.out.println("========== ¸Ş´º ==========");
 		for(String s:menu)
 		{
 			System.out.println(s);
 		}
 		System.out.println("=========================");
-		System.out.print("ë©”ë‰´ë¥¼ ì„ íƒí•˜ì„¸ìš”?");
+		System.out.print("¸Ş´º¸¦ ¼±ÅÃÇÏ¼¼¿ä?");
 		int index=scan.nextInt();
 		for(MovieVO vo:list)
 		{
@@ -104,7 +104,7 @@ public class MovieManager {
 	        	System.out.println("===================================================");
 			}
 		}
-		System.out.print("ì¥ë¥´ ì…ë ¥:");
+		System.out.print("Àå¸£ ÀÔ·Â:");
 		String genre=scan.next();
 		for(MovieVO vo:list)
 		{
@@ -119,7 +119,7 @@ public class MovieManager {
 			}
 		}
 		
-		System.out.print("ì˜í™” ì œëª© ì…ë ¥:");
+		System.out.print("¿µÈ­ Á¦¸ñ ÀÔ·Â:");
 		String title=scan.next();
 		for(MovieVO vo:list)
 		{
@@ -134,9 +134,9 @@ public class MovieManager {
 			}
 		}
 		
-		System.out.print("1~219 ë²ˆí˜¸ë¥¼ ì„ íƒ:");
+		System.out.print("1~219 ¹øÈ£¸¦ ¼±ÅÃ:");
 		int detail=scan.nextInt();
-		MovieVO vo=list.get(detail-1); // ArrayList => ì‹œì‘ 0
+		MovieVO vo=list.get(detail-1); // ArrayList => ½ÃÀÛ 0
 		System.out.println(vo.getMno());
 		System.out.println(vo.getGenre());
     	System.out.println(vo.getTitle());

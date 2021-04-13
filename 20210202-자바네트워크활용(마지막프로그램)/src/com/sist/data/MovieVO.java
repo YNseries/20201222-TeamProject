@@ -3,40 +3,24 @@ package com.sist.data;
 import java.io.Serializable;
 
 /*
- *  1|1|ì†Œìš¸(2020)|
- *  8.6|ì• ë‹ˆë©”ì´ì…˜/íŒíƒ€ì§€|
- *  2021.01.20 |
- *  107ë¶„|ì „ì²´ê´€ëŒê°€|
- *  í”¼íŠ¸ ë‹¥í„°|
- *  ì¼í”„ íŒŒì›ŒìŠ¤|
- *  //img1.daumcdn.net/thumb/C155x225/?fname=
- *  https%3A%2F%2Ft1.daumcdn.net%2Fmovie%2F71454256ae63506a
- *  7fee5e03cf929b9b65a4f433|
- *  1|
- *  ë‚˜ëŠ” ì–´ë–»ê²Œ â€˜ë‚˜â€™ë¡œ íƒœì–´ë‚˜ê²Œ ë˜ì—ˆì„ê¹Œ?
- *   ì§€êµ¬ì— ì˜¤ê¸° ì „ ì˜í˜¼ë“¤ì´ ë¨¸ë¬´ëŠ” â€˜íƒœì–´ë‚˜ê¸° ì „ ì„¸ìƒâ€™ì´ ìˆë‹¤ë©´? 
- *   ë‰´ìš•ì—ì„œ ìŒì•… ì„ ìƒë‹˜ìœ¼ë¡œ ì¼í•˜ë˜ â€˜ì¡°â€™ëŠ” ê¿ˆì— ê·¸ë¦¬ë˜ ìµœê³ ì˜ ë°´ë“œì™€ ì¬ì¦ˆ
- *    í´ëŸ½ì—ì„œ ì—°ì£¼í•˜ê²Œ ëœ ê·¸ ë‚ , ì˜ˆê¸°ì¹˜ ëª»í•œ ì‚¬ê³ ë¡œ ì˜í˜¼ì´ ë˜ì–´ â€˜íƒœì–´ë‚˜ê¸° ì „ ì„¸ìƒâ€™ì— 
- *    ë–¨ì–´ì§„ë‹¤. íƒ„ìƒ ì „ ì˜í˜¼ë“¤ì´ ë©˜í† ì™€ í•¨ê»˜ ìì‹ ì˜ ê´€ì‹¬ì‚¬ë¥¼ ë°œê²¬í•˜ë©´ 
- *    ì§€êµ¬ í†µí–‰ì¦ì„ ë°œê¸‰í•˜ëŠ” â€˜íƒœì–´ë‚˜ê¸° ì „ ì„¸ìƒâ€™ â€˜ì¡°â€™ëŠ” ê·¸ ê³³ì—ì„œ ìœ ì¼í•˜ê²Œ 
- *    ì§€êµ¬ì— ê°€ê³  ì‹¶ì–´í•˜ì§€ ì•ŠëŠ” ì‹œë‹ˆì»¬í•œ ì˜í˜¼ â€˜22â€™ì˜ ë©˜í† ê°€ ëœë‹¤. 
- *    ë§ì»¨, ê°„ë””, í…Œë ˆì‚¬ ìˆ˜ë…€ë„ ë©˜í† ë˜ê¸¸ í¬ê¸°í•œ ì˜í˜¼ â€˜22â€™ ê¿ˆì˜ ë¬´ëŒ€ì— 
- *    ì„œë ¤ë©´ â€˜22â€™ì˜ ì§€êµ¬ í†µí–‰ì¦ì´ í•„ìš”í•œ â€˜ì¡°â€™ ê·¸ëŠ” ë‹¤ì‹œ ì§€êµ¬ë¡œ 
- *    ëŒì•„ê°€ ê¿ˆì˜ ë¬´ëŒ€ì— ì„¤ ìˆ˜ ìˆì„ê¹Œ?
+ * 1|1|¼Ò¿ï(2020)|
+ * 8.6|¾Ö´Ï¸ŞÀÌ¼Ç/ÆÇÅ¸Áö|2021.01.20 |
+ * 107ºĞ|ÀüÃ¼°ü¶÷°¡|ÇÇÆ® ´ÚÅÍ|ÄÍÇÁ ÆÄ¿ö½º|
+ * //img1.daumcdn.net/thumb/C155x225/?fname=https%3A%2F%2Ft1.daumcdn.net%2Fmovie%2F71454256ae63506a7fee5e03cf929b9b65a4f433|1|³ª´Â ¾î¶»°Ô ¡®³ª¡¯·Î ÅÂ¾î³ª°Ô µÇ¾úÀ»±î? Áö±¸¿¡ ¿À±â Àü ¿µÈ¥µéÀÌ ¸Ó¹«´Â ¡®ÅÂ¾î³ª±â Àü ¼¼»ó¡¯ÀÌ ÀÖ´Ù¸é? ´º¿å¿¡¼­ À½¾Ç ¼±»ı´ÔÀ¸·Î ÀÏÇÏ´ø ¡®Á¶¡¯´Â ²Ş¿¡ ±×¸®´ø ÃÖ°íÀÇ ¹êµå¿Í ÀçÁî Å¬·´¿¡¼­ ¿¬ÁÖÇÏ°Ô µÈ ±× ³¯, ¿¹±âÄ¡ ¸øÇÑ »ç°í·Î ¿µÈ¥ÀÌ µÇ¾î ¡®ÅÂ¾î³ª±â Àü ¼¼»ó¡¯¿¡ ¶³¾îÁø´Ù. Åº»ı Àü ¿µÈ¥µéÀÌ ¸àÅä¿Í ÇÔ²² ÀÚ½ÅÀÇ °ü½É»ç¸¦ ¹ß°ßÇÏ¸é Áö±¸ ÅëÇàÁõÀ» ¹ß±ŞÇÏ´Â ¡®ÅÂ¾î³ª±â Àü ¼¼»ó¡¯ ¡®Á¶¡¯´Â ±× °÷¿¡¼­ À¯ÀÏÇÏ°Ô Áö±¸¿¡ °¡°í ½Í¾îÇÏÁö ¾Ê´Â ½Ã´ÏÄÃÇÑ ¿µÈ¥ ¡®22¡¯ÀÇ ¸àÅä°¡ µÈ´Ù. ¸µÄÁ, °£µğ, Å×·¹»ç ¼ö³àµµ ¸àÅäµÇ±æ Æ÷±âÇÑ ¿µÈ¥ ¡®22¡¯ ²ŞÀÇ ¹«´ë¿¡ ¼­·Á¸é ¡®22¡¯ÀÇ Áö±¸ ÅëÇàÁõÀÌ ÇÊ¿äÇÑ ¡®Á¶¡¯ ±×´Â ´Ù½Ã Áö±¸·Î µ¹¾Æ°¡ ²ŞÀÇ ¹«´ë¿¡ ¼³ ¼ö ÀÖÀ»±î?
  */
 public class MovieVO implements Serializable{
-    private int mno,cno;
-    private String title;
-    private String score;
-    private String genre;
-    private String regdate;
-    private String time;
-    private String grade;
-    private String director;
-    private String actor;
-    private String poster;
-    private String showUser;
-    private String story;
+	private int mno,cno;
+	private String title;
+	private String score;
+	private String genre;
+	private String regdate;
+	private String time;
+	private String grade;
+	private String director;
+	private String actor;
+	private String poster;
+	private String shoUser;
+	private String story;
 	public int getMno() {
 		return mno;
 	}
@@ -103,18 +87,18 @@ public class MovieVO implements Serializable{
 	public void setPoster(String poster) {
 		this.poster = poster;
 	}
-	public String getShowUser() {
-		return showUser;
+	public String getShoUser() {
+		return shoUser;
 	}
-	public void setShowUser(String showUser) {
-		this.showUser = showUser;
+	public void setShoUser(String shoUser) {
+		this.shoUser = shoUser;
 	}
 	public String getStory() {
 		return story;
 	}
 	public void setStory(String story) {
-		this.story = story; 
+		this.story = story;
 	}
-   
-   
+	
+	
 }

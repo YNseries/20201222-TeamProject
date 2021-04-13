@@ -1,64 +1,65 @@
 package com.sist.data;
-// íŒŒì¼ì— ArrayListë¥¼ ì €ì¥ 
+// ÆÄÀÏ¿¡ ArrayList¸¦ ÀúÀå
 import java.io.*;
 import java.util.*;
 public class ObjectSaveClass {
-    /*
-     *  private int mno,cno;
-	    private String title;
-	    private String score;
-	    private String genre;
-	    private String regdate;
-	    private String time;
-	    private String grade;
-	    private String director;
-	    private String actor;
-	    private String poster;
-	    private String showUser;
-	    private String story;
-     */
+	/*
+	 *  private int mno,cno;
+		private String title;
+		private String score;
+		private String genre;
+		private String regdate;
+		private String time;
+		private String grade;
+		private String director;
+		private String actor;
+		private String poster;
+		private String shoUser;
+		private String story;
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-        try
-        {
-        	// íŒŒì¼ ì½ê¸° 
-        	FileInputStream fis=new FileInputStream("c:\\javaDev\\daum_movie.txt");
-        	BufferedReader br=
-        			new BufferedReader(new InputStreamReader(fis));
-        	// íŒŒì¼ì˜ ë‚´ìš©ì „ì²´ => ë©”ëª¨ë¦¬ì— ì €ì¥ 
-        	ArrayList<MovieVO> list=new ArrayList<MovieVO>();
-        	while(true)
-        	{
-        		String movie_data=br.readLine(); // readLine() => \n
-        		if(movie_data==null)
-        			break; // ë”ì´ìƒ ì½ì„ ê°’ì´ ì—†ëŠ” ê²½ìš°=>ì¢…ë£Œ
-        		StringTokenizer st=new StringTokenizer(movie_data,"|");
-        		MovieVO vo=new MovieVO();
-        		vo.setMno(Integer.parseInt(st.nextToken()));
-        		vo.setCno(Integer.parseInt(st.nextToken()));
-        		vo.setTitle(st.nextToken());
-        		vo.setScore(st.nextToken());
-        		vo.setGenre(st.nextToken());
-        		vo.setRegdate(st.nextToken());
-        		vo.setTime(st.nextToken());
-        		vo.setGrade(st.nextToken());
-        		vo.setDirector(st.nextToken());
-        		vo.setActor(st.nextToken());
-        		vo.setPoster("http:"+st.nextToken());
-        		vo.setShowUser(st.nextToken());
-        		vo.setStory(st.nextToken());
-        		list.add(vo);
-        	}
-        	fis.close();
-        	// ArrayList
-        	FileOutputStream fos=new FileOutputStream("c:\\download\\movie.txt");
-        	// Create , true=> append
-        	ObjectOutputStream oos=new ObjectOutputStream(fos);
-        	oos.writeObject(list);
-        	oos.close();
-        	// ê°ì²´ ë‹¨ìœ„ ì €ì¥
-        	System.out.println("ê°ì²´ ì €ì¥ ì™„ë£Œ!!");
-        }catch(Exception ex){}
+		try
+		{
+			// ÆÄÀÏ ÀĞ±â
+			FileInputStream fis=new FileInputStream("c:\\javaDev\\daum_movie.txt");
+			BufferedReader br=
+					new BufferedReader(new InputStreamReader(fis));
+			// ÆÄÀÏÀÇ ³»¿ë ÀüÃ¼¸¦ ¸Ş¸ğ¸®¿¡ ÀúÀå
+			ArrayList<MovieVO> list=new ArrayList<MovieVO>();
+			while(true)
+			{
+				String movie_data=br.readLine();  // readLine() => \n±îÁö°¡ ÇÑ ÁÙ
+				if(movie_data==null)
+					break;  // ´õÀÌ»ó ÀĞÀ» °ªÀÌ ¾ø´Â °æ¿ì => Á¾·á
+				StringTokenizer st=new StringTokenizer(movie_data,"|");
+				MovieVO vo=new MovieVO();
+				// ÀÚ¸£±â
+				vo.setMno(Integer.parseInt(st.nextToken()));
+				vo.setCno(Integer.parseInt(st.nextToken()));
+				vo.setTitle(st.nextToken());
+				vo.setScore(st.nextToken());
+				vo.setGenre(st.nextToken());
+				vo.setRegdate(st.nextToken());
+				vo.setTime(st.nextToken());
+				vo.setGrade(st.nextToken());
+				vo.setDirector(st.nextToken());
+				vo.setActor(st.nextToken());
+				vo.setPoster("http:"+st.nextToken());
+				vo.setShoUser(st.nextToken());
+				vo.setStory(st.nextToken());
+				list.add(vo);
+			}
+			fis.close();
+			// ArrayList¿¡ ÀúÀå
+			FileOutputStream fos=new FileOutputStream("c:\\download\\movie.txt");
+			// Create, true => append
+			ObjectOutputStream oos=new ObjectOutputStream(fos);
+			oos.writeObject(list);
+			oos.close();
+			// °´Ã¼ ´ÜÀ§·Î ÀúÀå
+			System.out.println("°´Ã¼ ÀúÀå ¿Ï·á!!");
+		}catch(Exception ex) {}
 	}
 
 }

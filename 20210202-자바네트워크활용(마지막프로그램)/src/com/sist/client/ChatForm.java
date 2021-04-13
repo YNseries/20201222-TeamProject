@@ -4,52 +4,52 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.*;
 public class ChatForm extends JPanel{
-   JTextPane pane;
-   JComboBox box;
-   JTextField tf;
-   JTable table;//í…Œì´ë¸” ëª¨ì–‘ 
-   DefaultTableModel model;// ë°ì´í„° ë‹´ë‹¹
-   JButton b1,b2,b3;
-   public ChatForm()
-   {
-	   pane=new JTextPane();
-	   JScrollPane js=new JScrollPane(pane);
-	   box=new JComboBox();
-	   box.addItem("black");
-	   box.addItem("cyan");
-	   box.addItem("green");
-	   box.addItem("yellow");
-	   box.addItem("blue");
-	   tf=new JTextField();
-	   
-	   String[] col={"ID","ëŒ€í™”ëª…","ì„±ë³„"};
-	   String[][] row=new String[0][3];// í•œì¤„ì— ë°ì´í„° 3ê°œ ì…ë ¥
-	   model=new DefaultTableModel(row,col);
-	   table=new JTable(model);
-	   JScrollPane js2=new JScrollPane(table);
-	   
-	   b1=new JButton("ìª½ì§€ë³´ë‚´ê¸°");
-	   b2=new JButton("ì˜¤ëŠ˜ì˜ë¡œë˜");// ì“°ë ˆë“œ (ë¡œë˜ìš´ì„¸)
-	   b3=new JButton("ë‚˜ê°€ê¸°");
-	   
-	   JPanel p=new JPanel();
-	   p.setLayout(new GridLayout(3,1,5,5));
-	   p.add(b1);
-	   p.add(b2);
-	   p.add(b3);
-	   // ë°°ì¹˜ 
-	   setLayout(null);
-	   // ì‚¬ìš©ìê°€ ì§ì ‘ ë°°ì¹˜ 
-	   js.setBounds(15, 20, 650, 550);
-	   tf.setBounds(15, 575, 550, 30);
-	   box.setBounds(570, 575, 95, 30);
-	   
-	   js2.setBounds(670, 20, 330, 500);
-	   
-	   p.setBounds(670, 525, 330, 80);
-	   add(js);
-	   add(tf);add(box);
-	   add(js2);
-	   add(p);
-   }
+	JTextPane pane;
+	JComboBox box;
+	JTextField tf;
+	JTable table;    // Å×ÀÌºí ¸ğ¾ç
+	DefaultTableModel model;   // µ¥ÀÌÅÍ Ãß°¡ÇÒ ¶§
+	JButton b1,b2;
+	public ChatForm()
+	{
+		pane=new JTextPane();
+		JScrollPane js=new JScrollPane(pane);
+		box=new JComboBox();
+		box.addItem("black");
+		box.addItem("cyan");
+		box.addItem("green");
+		box.addItem("yellow");
+		box.addItem("blue");
+		tf=new JTextField();
+		
+		String[] col= {"ID","´ëÈ­¸í","¼ºº°"};
+		String[][] row=new String[0][3];  // ÇÑ ÁÙ¿¡ µ¥ÀÌÅÍ¸¦ 3°³ ÀÔ·Â
+		model=new DefaultTableModel(row,col);
+		table=new JTable(model);
+		JScrollPane js2=new JScrollPane(table);
+		
+		b1=new JButton("ÂÊÁöº¸³»±â");
+		b2=new JButton("¿î¼¼º¸±â");   // ¾²·¹µå(·Î¶Ç¿î¼¼)
+		
+		JPanel p=new JPanel();
+		p.setLayout(new GridLayout(2,1,5,5));
+		p.add(b1);
+		p.add(b2);
+		
+		// ¹èÄ¡
+		setLayout(null);
+		
+		// »ç¿ëÀÚ°¡ Á÷Á¢ Ã¤Áö
+		js.setBounds(15, 20, 650, 550);
+		tf.setBounds(15, 575, 550, 30);
+		box.setBounds(570, 575, 95, 30);
+		
+		js.setBounds(670, 20, 330, 500);
+		
+		p.setBounds(670, 525, 330, 80);
+		add(js);
+		add(tf);add(box);
+		add(js2);
+		add(p);
+	}
 }

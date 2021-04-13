@@ -1,5 +1,5 @@
 package com.sist.client;
-//ì˜í™” ëª©ë¡
+// ¿µÈ­ ¸ñ·Ï
 public class MovieListForm {
 
 }

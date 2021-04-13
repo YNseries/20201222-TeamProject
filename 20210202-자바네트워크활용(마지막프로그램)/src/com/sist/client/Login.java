@@ -9,21 +9,22 @@ public class Login extends JFrame{
     public Login()
     {
     	la1=new JLabel("ID",JLabel.RIGHT);
-    	la2=new JLabel("ëŒ€í™”ëª…",JLabel.RIGHT);
-    	la3=new JLabel("ì„±ë³„",JLabel.RIGHT);
+    	la2=new JLabel("´ëÈ­¸í",JLabel.RIGHT);
+    	la3=new JLabel("¼ºº°",JLabel.RIGHT);
     	
     	tf1=new JTextField();
     	tf2=new JTextField();
     	
-    	rb1=new JRadioButton("ë‚¨ì");
-    	rb2=new JRadioButton("ì—¬ì");
+    	rb1=new JRadioButton("³²ÀÚ");
+    	rb2=new JRadioButton("¿©ÀÚ");
     	ButtonGroup bg=new ButtonGroup();
     	bg.add(rb1); bg.add(rb2);
     	rb1.setSelected(true);
     	
-    	b1=new JButton("ë¡œê·¸ì¸");
-    	b2=new JButton("ì·¨ì†Œ");
+    	b1=new JButton("·Î±×ÀÎ");
+    	b2=new JButton("Ãë¼Ò");
     	
+    	// ¹èÄ¡ 
     	setLayout(null);
     	la1.setBounds(10, 15, 60, 30);
     	tf1.setBounds(75, 15, 150, 30);
@@ -40,18 +41,26 @@ public class Login extends JFrame{
     	
     	p.setBounds(10, 120, 215, 35);
     	
-
+    	// À©µµ¿ì Ãß°¡
     	add(la1);add(tf1);
     	add(la2);add(tf2);
     	add(la3);add(rb1);add(rb2);
     	add(p);
     	
+    	// À©µµ¿ì Å©±â
     	setSize(250, 200);
     	setVisible(true);
     }
-	public static void main(String[] args) 
-	{ 
-		new Login();
+	public static void main(String[] args) { 
+		new Login(); 
 	}
 	
 }
+
+
+
+
+
+
+
+

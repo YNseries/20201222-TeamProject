@@ -9,18 +9,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import java.net.*;
-public class MovieHomeForm extends JPanel implements ActionListener{
+public class MovieHomeForm extends JPanel implements ActionListener{  // JPanel ÆĞ³Î À§¿¡ ¿Ã¶ó°¡´Â
 	JLabel[] poster=new JLabel[20];
 	JPanel pan=new JPanel();
-	JButton b1=new JButton("ì´ì „");
-	JButton b2=new JButton("ë‹¤ìŒ");
+	JButton b1=new JButton("ÀÌÀü");
+	JButton b2=new JButton("´ÙÀ½");
 	JLabel pageLa=new JLabel("0 page / 0 pages");
 	int curpage=1;
 	int totalpage=11;
-	MovieManager mgr=new MovieManager();
+	MovieManager mgr=new MovieManager();   // µ¥ÀÌÅÍ º¸³»ÁÖ´Â °÷
 	public MovieHomeForm()
 	{
-		pan.setLayout(new GridLayout(4,5,5,5));
+		pan.setLayout(new GridLayout(4, 5, 5,5));   // Æ÷½ºÅÍ ÃÊ±âÈ­
 		for(int i=0;i<poster.length;i++)
 		{
 			poster[i]=new JLabel();
@@ -37,15 +37,16 @@ public class MovieHomeForm extends JPanel implements ActionListener{
 		add("South",p);
 		moviePrint(curpage);
 		
-		// ë“±ë¡
+		// µî·Ï
 		b1.addActionListener(this);
 		b2.addActionListener(this);
+		
 	}
 	public void moviePrint(int page)
 	{
 		try
 		{
-			// ë°ì´í„° ë°›ê¸° 
+			// µ¥ÀÌÅÍ ¹Ş±â
 			ArrayList<MovieVO> list=mgr.movieListData(page);
 			int total=mgr.movieTotalPage();
 			pageLa.setText(page+" page / "+total+" pages");
@@ -59,9 +60,9 @@ public class MovieHomeForm extends JPanel implements ActionListener{
 				poster[i].setIcon(new ImageIcon(img));
 				// <img src="vo.getPoster()" width=350 height=350>
 			}
-		}catch(Exception ex) {ex.printStackTrace();}
+		}catch(Exception ex) {ex.printStackTrace();} 
 	}
-	public static Image getImage(ImageIcon ii,int w,int h)
+	public static Image getImage(ImageIcon ii,int w,int h)  // È­¸é¿¡ ÀÌ¹ÌÁö¸¦ µü ¸Â°Ô ÇØ ÁÖ´Â ÄÚµå
     {
     	Image dimg = ii.getImage().getScaledInstance(w, h,
     	        Image.SCALE_SMOOTH);
@@ -80,11 +81,11 @@ public class MovieHomeForm extends JPanel implements ActionListener{
 		}
 		if(e.getSource()==b2)
 		{
-			if(curpage<totalpage)
+			if(curpage<totalpage) 
 			{
 				curpage++;
 				moviePrint(curpage);
 			}
 		}
-	} 
+	}
 }
